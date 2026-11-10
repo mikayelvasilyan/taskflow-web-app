@@ -1,3 +1,4 @@
+import path from 'node:path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
@@ -39,6 +40,17 @@ export function createApp(ctx: AppContext) {
   if (ctx.env.NODE_ENV === 'test') api.use(testRouter(ctx));
   api.use(notFoundHandler);
   app.use('/api', api);
+
+  // Single-image deploy: serve the built web app and fall back to index.html for client routes.
+  if (ctx.env.SERVE_WEB_DIR) {
+    const root = path.resolve(ctx.env.SERVE_WEB_DIR);
+    app.use(express.static(root, { index: false, maxAge: '1h' }));
+    app.use((req, res, next) => {
+      if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+      if (!req.accepts('html')) return next();
+      res.sendFile(path.join(root, 'index.html'), { headers: { 'Cache-Control': 'no-cache' } });
+    });
+  }
 
   app.use(notFoundHandler);
   app.use(errorHandler);

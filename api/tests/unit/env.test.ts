@@ -23,4 +23,22 @@ describe('parseEnv', () => {
     });
     expect(env.COOKIE_SECURE).toBe(true);
   });
+
+  it('generates a random secret in production only when explicitly allowed', () => {
+    const a = parseEnv({ NODE_ENV: 'production', ALLOW_EPHEMERAL_JWT_SECRET: 'true' });
+    const b = parseEnv({ NODE_ENV: 'production', ALLOW_EPHEMERAL_JWT_SECRET: 'true' });
+    expect(a.JWT_SECRET).toHaveLength(64);
+    expect(a.JWT_SECRET).not.toBe(b.JWT_SECRET);
+    expect(a.JWT_SECRET).not.toBe(INSECURE_DEV_SECRET);
+    expect(() =>
+      parseEnv({ NODE_ENV: 'production', ALLOW_EPHEMERAL_JWT_SECRET: 'false' }),
+    ).toThrow();
+  });
+
+  it('treats empty values as unset', () => {
+    expect(() => parseEnv({ NODE_ENV: 'production', JWT_SECRET: '' })).toThrow(
+      /JWT_SECRET is required/,
+    );
+    expect(parseEnv({ PORT: '', JWT_SECRET: '' }).PORT).toBe(4000);
+  });
 });

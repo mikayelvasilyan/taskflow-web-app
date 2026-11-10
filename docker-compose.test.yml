@@ -1,0 +1,13 @@
+# Test override used by the E2E repo (playwright-jenkins-e2e):
+#   docker compose -f docker-compose.yml -f docker-compose.test.yml up -d --build --wait
+# Enables /api/test/reset and /api/test/seed, disables login rate limiting,
+# exposes the API directly on 4000 and uses a throwaway in-container database.
+
+services:
+  api:
+    environment:
+      NODE_ENV: test
+      DATABASE_URL: file:/tmp/taskflow-test.db
+    ports:
+      - "${API_PORT:-4000}:4000"
+    volumes: !reset []

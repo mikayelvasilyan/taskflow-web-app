@@ -422,7 +422,7 @@ Run the relevant tests after each task and commit before ticking the box.
 - [ ] 27. `[Opus]` Drag-and-drop hardening: verify pointer/touch/keyboard drag in a real browser, fix ordering or flicker bugs, confirm reduced-motion behaviour, make sure drag is automatable by Playwright (repo 2).
 
 ### Phase E — Docker, CI, deploy
-- [ ] 28. `[Opus]` `api/Dockerfile`, `web/Dockerfile` + `nginx.conf`, `docker-compose.yml`, `docker-compose.test.yml`, root `Dockerfile`; verify `docker compose up` end to end.
+- [x] 28. `[Opus]` `api/Dockerfile`, `web/Dockerfile` + `nginx.conf`, `docker-compose.yml`, `docker-compose.test.yml`, root `Dockerfile`; verify `docker compose up` end to end. — *Done: verified `docker compose up` (health, SPA routes, cached assets, /docs, cookie login, test routes 404 in production), the test override (seed/reset work on :4000 and via nginx) and the single image (API serves web build via SERVE_WEB_DIR). Empty env values now count as unset; compose opts into a per-start random JWT secret (ALLOW_EPHEMERAL_JWT_SECRET) so no secret is committed.*
 - [ ] 29. `[Opus]` GitHub Actions `ci.yml` (lint, typecheck, tests, build, docker smoke, gitleaks) + `.gitleaks.toml`.
 - [ ] 30. `[Opus]` `render.yaml` + `DEPLOY.md`. **Ask the owner before deploying.**
 
