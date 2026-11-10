@@ -5,9 +5,11 @@ import type { Db } from './db/client.js';
 import type { Env } from './env.js';
 import { errorHandler, notFoundHandler } from './middleware/error.js';
 import { authRouter } from './routes/auth.js';
+import { dashboardRouter } from './routes/dashboard.js';
 import { healthRouter } from './routes/health.js';
 import { projectsRouter } from './routes/projects.js';
 import { tasksRouter } from './routes/tasks.js';
+import { testRouter } from './routes/test.js';
 import { usersRouter } from './routes/users.js';
 
 export interface AppContext {
@@ -29,6 +31,9 @@ export function createApp(ctx: AppContext) {
   api.use(usersRouter(ctx));
   api.use(projectsRouter(ctx));
   api.use(tasksRouter(ctx));
+  api.use(dashboardRouter(ctx));
+  // Mounted only under NODE_ENV=test; elsewhere these paths simply do not exist (404).
+  if (ctx.env.NODE_ENV === 'test') api.use(testRouter(ctx));
   api.use(notFoundHandler);
   app.use('/api', api);
 

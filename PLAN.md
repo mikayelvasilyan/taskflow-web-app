@@ -397,9 +397,9 @@ Run the relevant tests after each task and commit before ticking the box.
 - [x] 6. `[Sonnet]` Permissions service + `requireRole`; users endpoints (admin); protected accounts; tests incl. permission matrix. — *Done: permission helpers, admin user endpoints, protected accounts.*
 - [x] 7. `[Sonnet]` Projects, members, invites (incl. invite applied on signup); tests. — *Done: projects, members, invites (applied on signup), labels. 53 API tests total.*
 - [x] 8. `[Sonnet]` Tasks: CRUD, filters/search/sort, position, `completedAt`, activity log, labels, comments; tests. — *Done: filters, search (wildcards escaped), sort with nulls last, positions, activity, labels, comments. 90 API tests total.*
-- [ ] 9. `[Sonnet]` Dashboard + search endpoints; tests against known data.
-- [ ] 10. `[Sonnet]` Seed: demo scenario (section 6) and `workspace` scenario; `SEED_ON_START`; periodic demo reset.
-- [ ] 11. `[Sonnet]` Test routes `reset` / `seed`, mounted only in `NODE_ENV=test`; test proving 404 otherwise.
+- [x] 9. `[Sonnet]` Dashboard + search endpoints; tests against known data. — *Done: dashboard + search, scoped by role, tested against known data.*
+- [x] 10. `[Sonnet]` Seed: demo scenario (section 6) and `workspace` scenario; `SEED_ON_START`; periodic demo reset. — *Done: demo seed (3 projects, 36 tasks, 4 overdue, 2 due today, 2 tomorrow, 15 completions) + isolated workspace scenario. Smoke-tested on the real server.*
+- [x] 11. `[Sonnet]` Test routes `reset` / `seed`, mounted only in `NODE_ENV=test`; test proving 404 otherwise. — *Done: reset + seed routes, 404 proven for development and production.*
 - [ ] 12. `[Sonnet]` OpenAPI from Zod, Swagger UI at `/docs`; test that the spec is valid and complete.
 - [ ] 13. `[Sonnet]` API coverage ≥ thresholds; fill gaps. Record real numbers for the README.
 
