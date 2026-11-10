@@ -1,7 +1,7 @@
 import { AlertTriangle, CheckCircle2, Circle, CircleDashed, type LucideIcon } from 'lucide-react';
 import {
-  Area,
-  AreaChart,
+  Bar,
+  BarChart,
   CartesianGrid,
   Cell,
   Pie,
@@ -18,6 +18,7 @@ import { TaskRowLink } from '@/components/tasks/TaskRowLink';
 import { Skeleton } from '@/components/ui/misc';
 import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/cn';
+import { formatShortDate } from '@/lib/dates';
 import { tid } from '@/lib/testids';
 
 const greeting = () => {
@@ -31,12 +32,16 @@ function StatCard({
   value,
   icon: Icon,
   tone,
+  hint,
+  hintClass = 'text-fg-muted',
 }: {
   name: string;
   label: string;
   value: number;
   icon: LucideIcon;
   tone: string;
+  hint: string;
+  hintClass?: string;
 }) {
   return (
     <div
@@ -49,6 +54,7 @@ function StatCard({
         <Icon className={cn('size-4.5', tone)} aria-hidden />
       </div>
       <span className="tabular text-4xl font-semibold tracking-tight">{value}</span>
+      <span className={cn('text-xs', hintClass)}>{hint}</span>
     </div>
   );
 }
@@ -76,7 +82,7 @@ function Card({
 }
 
 const SLICES = [
-  { key: 'todo', label: 'To do', color: 'var(--border-strong)' },
+  { key: 'todo', label: 'To do', color: 'var(--fg-subtle)' },
   { key: 'in_progress', label: 'In progress', color: 'var(--accent)' },
   { key: 'done', label: 'Done', color: 'var(--success)' },
 ] as const;
@@ -133,6 +139,7 @@ export default function Dashboard() {
                 value={d.counts.todo}
                 icon={Circle}
                 tone="text-fg-muted"
+                hint={`across ${d.insights.projectCount} ${d.insights.projectCount === 1 ? 'project' : 'projects'}`}
               />
               <StatCard
                 name="in_progress"
@@ -140,6 +147,7 @@ export default function Dashboard() {
                 value={d.counts.in_progress}
                 icon={CircleDashed}
                 tone="text-accent-fg"
+                hint={`${d.insights.dueThisWeek} due this week`}
               />
               <StatCard
                 name="done"
@@ -147,6 +155,7 @@ export default function Dashboard() {
                 value={d.counts.done}
                 icon={CheckCircle2}
                 tone="text-success"
+                hint={`${d.insights.completedLast7Days} in the last 7 days`}
               />
               <StatCard
                 name="overdue"
@@ -154,6 +163,12 @@ export default function Dashboard() {
                 value={d.counts.overdue}
                 icon={AlertTriangle}
                 tone="text-danger"
+                hint={
+                  d.insights.oldestOverdueDays === null
+                    ? 'nothing overdue'
+                    : `oldest: ${d.insights.oldestOverdueDays} ${d.insights.oldestOverdueDays === 1 ? 'day' : 'days'}`
+                }
+                hintClass={d.insights.oldestOverdueDays === null ? 'text-success' : 'text-danger'}
               />
             </div>
 
@@ -220,42 +235,42 @@ export default function Dashboard() {
                   aria-label={`Tasks completed per day over the last 14 days: ${d.completedByDay.reduce((n, x) => n + x.count, 0)} in total`}
                 >
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart
-                      data={d.completedByDay.map((x) => ({ ...x, label: x.date.slice(5) }))}
+                    <BarChart
+                      data={d.completedByDay.map((x) => ({
+                        ...x,
+                        label: formatShortDate(x.date),
+                      }))}
                       margin={{ top: 8, right: 8, left: -20, bottom: 0 }}
                     >
-                      <defs>
-                        <linearGradient id="completedFill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.35} />
-                          <stop offset="100%" stopColor="var(--accent)" stopOpacity={0} />
-                        </linearGradient>
-                      </defs>
                       <CartesianGrid vertical={false} stroke="var(--border)" />
                       <XAxis
                         dataKey="label"
                         tickLine={false}
                         axisLine={false}
                         tick={{ fill: 'var(--fg-muted)', fontSize: 11 }}
-                        interval={1}
+                        interval={2}
                       />
                       <YAxis
                         allowDecimals={false}
+                        domain={[0, (max: number) => Math.max(2, max + 1)]}
                         tickLine={false}
                         axisLine={false}
                         tick={{ fill: 'var(--fg-muted)', fontSize: 11 }}
                       />
                       <ChartTooltip
+                        cursor={{ fill: 'var(--surface-2)' }}
                         contentStyle={tooltipStyle}
-                        formatter={(v) => [v, 'Completed']}
+                        labelStyle={{ color: 'var(--fg)', fontWeight: 600 }}
+                        formatter={(v) => [`${v} completed`, '']}
+                        separator=""
                       />
-                      <Area
-                        type="monotone"
+                      <Bar
                         dataKey="count"
-                        stroke="var(--accent)"
-                        strokeWidth={2}
-                        fill="url(#completedFill)"
+                        fill="var(--accent)"
+                        radius={[4, 4, 0, 0]}
+                        maxBarSize={28}
                       />
-                    </AreaChart>
+                    </BarChart>
                   </ResponsiveContainer>
                 </div>
               </Card>

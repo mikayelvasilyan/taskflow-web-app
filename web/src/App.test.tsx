@@ -42,6 +42,12 @@ describe('login', () => {
       http.get('/api/dashboard', () =>
         HttpResponse.json({
           counts: { todo: 3, in_progress: 1, done: 2, overdue: 1 },
+          insights: {
+            projectCount: 2,
+            dueThisWeek: 1,
+            completedLast7Days: 2,
+            oldestOverdueDays: 4,
+          },
           byPriority: { low: 0, medium: 0, high: 0, urgent: 0 },
           completedByDay: [],
           overdue: [],

@@ -25,6 +25,12 @@ export type Dashboard = {
   counts: Record<Status | 'overdue', number>;
   byPriority: Record<Priority, number>;
   completedByDay: { date: string; count: number }[];
+  insights: {
+    projectCount: number;
+    dueThisWeek: number;
+    completedLast7Days: number;
+    oldestOverdueDays: number | null;
+  };
   overdue: TaskListItem[];
   myTasks: TaskListItem[];
 };

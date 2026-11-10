@@ -71,6 +71,12 @@ describe('GET /api/dashboard', () => {
     expect(
       res.body.completedByDay.find((d: { date: string }) => d.date === addDaysUtc(-2)).count,
     ).toBe(1);
+    expect(res.body.insights).toEqual({
+      projectCount: 1,
+      dueThisWeek: 2,
+      completedLast7Days: 1,
+      oldestOverdueDays: 5,
+    });
     expect(res.body.overdue.map((x: { title: string }) => x.title)).toEqual([
       'Overdue A',
       'Overdue B',
@@ -91,6 +97,12 @@ describe('GET /api/dashboard', () => {
     const none = await request(t.app).get('/api/dashboard').set(outsider.auth);
     expect(none.body.counts).toEqual({ todo: 0, in_progress: 0, done: 0, overdue: 0 });
     expect(none.body.overdue).toEqual([]);
+    expect(none.body.insights).toEqual({
+      projectCount: 0,
+      dueThisWeek: 0,
+      completedLast7Days: 0,
+      oldestOverdueDays: null,
+    });
     expect(none.body.myTasks).toEqual([]);
     const all = await request(t.app).get('/api/dashboard').set(admin.auth);
     expect(all.body.counts.todo).toBe(3);

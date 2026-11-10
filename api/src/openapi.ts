@@ -516,6 +516,12 @@ route({
         urgent: z.number(),
       }),
       completedByDay: z.array(z.object({ date: z.string(), count: z.number() })),
+      insights: z.object({
+        projectCount: z.number(),
+        dueThisWeek: z.number(),
+        completedLast7Days: z.number(),
+        oldestOverdueDays: z.number().nullable(),
+      }),
       overdue: z.array(TaskListItem),
       myTasks: z.array(TaskListItem),
     }),

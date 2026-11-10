@@ -1864,6 +1864,12 @@ export interface paths {
                 date: string;
                 count: number;
               }[];
+              insights: {
+                projectCount: number;
+                dueThisWeek: number;
+                completedLast7Days: number;
+                oldestOverdueDays: number | null;
+              };
               overdue: components['schemas']['TaskListItem'][];
               myTasks: components['schemas']['TaskListItem'][];
             };
