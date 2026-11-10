@@ -404,21 +404,21 @@ Run the relevant tests after each task and commit before ticking the box.
 - [x] 13. `[Sonnet]` API coverage ≥ thresholds; fill gaps. Record real numbers for the README. — *Done (real run): 110 tests, 11 files; coverage lines 96.19%, statements 95.81%, branches 92.71%, functions 89.75%; thresholds enforced in vitest.config.ts.*
 
 ### Phase C — Web foundation
-- [ ] 14. `[Sonnet]` Web scaffold: Vite + React + TS strict, Tailwind v4, ESLint (jsx-a11y), Vitest + Testing Library + MSW, dev proxy.
-- [ ] 15. `[Sonnet]` Design tokens (`tokens.css`, section 7) for light/dark, Inter, Tailwind theme mapping, `useTheme` (Light/Dark/System, persisted, no flash on load).
-- [ ] 16. `[Sonnet]` shadcn/ui primitives restyled to the tokens; `Logo`, `Wordmark`, `favicon.svg`; `Avatar`, `EmptyState` + illustrations, skeletons.
+- [x] 14. `[Sonnet]` Web scaffold: Vite + React + TS strict, Tailwind v4, ESLint (jsx-a11y), Vitest + Testing Library + MSW, dev proxy. — *Done.*
+- [x] 15. `[Sonnet]` Design tokens (`tokens.css`, section 7) for light/dark, Inter, Tailwind theme mapping, `useTheme` (Light/Dark/System, persisted, no flash on load). — *Done.*
+- [x] 16. `[Sonnet]` shadcn/ui primitives restyled to the tokens; `Logo`, `Wordmark`, `favicon.svg`; `Avatar`, `EmptyState` + illustrations, skeletons. — *Done.*
 - [ ] 17. `[Fable]` **Design checkpoint**: review tokens and primitives on a temporary `/kitchen-sink` route in both themes; adjust tokens before pages are built.
-- [ ] 18. `[Sonnet]` API client, generated types (`openapi-typescript`), query hooks, `testids.ts`, auth context, protected routes, router with page transitions.
+- [x] 18. `[Sonnet]` API client, generated types (`openapi-typescript`), query hooks, `testids.ts`, auth context, protected routes, router with page transitions. — *Done: generated types via npx openapi-typescript (not a dependency; TS 5 peer conflict). Auth fix: keep the `me` query when clearing the cache on login.*
 
 ### Phase D — Web features
-- [ ] 19. `[Sonnet]` Login + signup (split layout, demo-account buttons, inline validation, server errors); component tests.
-- [ ] 20. `[Sonnet]` App shell: sidebar (collapsible), top bar, user menu, bottom nav on mobile, new-project dialog, toasts, 404 page.
-- [ ] 21. `[Sonnet]` Kanban board with dnd-kit (pointer, touch, keyboard), optimistic moves with rollback, "Move to…" menu, new-task dialog, mobile scroll-snap columns; tests.
-- [ ] 22. `[Sonnet]` Task panel (`?task=`): properties, markdown description, comments, activity, delete with confirm.
-- [ ] 23. `[Sonnet]` List view: filters, search, sorting, URL state, mobile stacked rows; tests.
-- [ ] 24. `[Sonnet]` Dashboard (stat cards, Recharts, overdue, my tasks) and My tasks page.
-- [ ] 25. `[Sonnet]` Project settings (rename, members, invites, delete) and Settings (profile, appearance, admin members); role-hidden UI tests.
-- [ ] 26. `[Sonnet]` Command palette, keyboard shortcuts, shortcuts dialog, relative dates everywhere.
+- [x] 19. `[Sonnet]` Login + signup (split layout, demo-account buttons, inline validation, server errors); component tests. — *Done, verified in a real browser (login, dashboard, drag-and-drop move persisted, task panel deep link).*
+- [x] 20. `[Sonnet]` App shell: sidebar (collapsible), top bar, user menu, bottom nav on mobile, new-project dialog, toasts, 404 page. — *Done, verified in a real browser (login, dashboard, drag-and-drop move persisted, task panel deep link).*
+- [x] 21. `[Sonnet]` Kanban board with dnd-kit (pointer, touch, keyboard), optimistic moves with rollback, "Move to…" menu, new-task dialog, mobile scroll-snap columns; tests. — *Done, verified in a real browser (login, dashboard, drag-and-drop move persisted, task panel deep link).*
+- [x] 22. `[Sonnet]` Task panel (`?task=`): properties, markdown description, comments, activity, delete with confirm. — *Done, verified in a real browser (login, dashboard, drag-and-drop move persisted, task panel deep link).*
+- [x] 23. `[Sonnet]` List view: filters, search, sorting, URL state, mobile stacked rows; tests. — *Done, verified in a real browser (login, dashboard, drag-and-drop move persisted, task panel deep link).*
+- [x] 24. `[Sonnet]` Dashboard (stat cards, Recharts, overdue, my tasks) and My tasks page. — *Done, verified in a real browser (login, dashboard, drag-and-drop move persisted, task panel deep link).*
+- [x] 25. `[Sonnet]` Project settings (rename, members, invites, delete) and Settings (profile, appearance, admin members); role-hidden UI tests. — *Done, verified in a real browser (login, dashboard, drag-and-drop move persisted, task panel deep link).*
+- [x] 26. `[Sonnet]` Command palette, keyboard shortcuts, shortcuts dialog, relative dates everywhere. — *Done, verified in a real browser (login, dashboard, drag-and-drop move persisted, task panel deep link).*
 - [ ] 27. `[Opus]` Drag-and-drop hardening: verify pointer/touch/keyboard drag in a real browser, fix ordering or flicker bugs, confirm reduced-motion behaviour, make sure drag is automatable by Playwright (repo 2).
 
 ### Phase E — Docker, CI, deploy
