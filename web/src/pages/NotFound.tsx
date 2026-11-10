@@ -31,7 +31,7 @@ export default function NotFoundPage({ inShell = false }: { inShell?: boolean })
             textAnchor="middle"
             fontSize="30"
             fontWeight="600"
-            fill="var(--accent)"
+            fill="var(--accent-fg)"
           >
             404
           </text>

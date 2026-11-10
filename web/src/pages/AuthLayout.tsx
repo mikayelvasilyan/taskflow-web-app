@@ -11,12 +11,12 @@ export function AuthLayout({ children }: { children: ReactNode }) {
         <Link to="/" aria-label="TaskFlow home" className="w-fit">
           <BrandLockup />
         </Link>
-        <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-10">
+        <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-start py-10 pt-12 lg:justify-center lg:pt-10">
           {children}
         </div>
         <p className="text-xs text-fg-subtle">A personal portfolio project by Mikayel Vasilyan.</p>
       </div>
-      <aside className="relative hidden overflow-hidden bg-accent-soft lg:flex lg:flex-col lg:justify-center lg:px-14">
+      <aside className="relative hidden overflow-hidden border-l border-border bg-surface-2 lg:flex lg:flex-col lg:justify-center lg:px-14">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full bg-accent/15 blur-3xl"

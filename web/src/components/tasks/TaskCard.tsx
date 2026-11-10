@@ -1,4 +1,4 @@
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, User } from 'lucide-react';
 import { forwardRef, type HTMLAttributes } from 'react';
 import type { TaskListItem } from '@/api/client';
 import { Avatar } from '@/components/common/Avatar';
@@ -68,8 +68,10 @@ export const TaskCard = forwardRef<HTMLDivElement, TaskCardProps>(
               <span
                 aria-label="Unassigned"
                 title="Unassigned"
-                className="size-6 rounded-full border border-dashed border-border-strong"
-              />
+                className="inline-flex size-6 items-center justify-center rounded-full border border-dashed border-fg-subtle text-fg-subtle"
+              >
+                <User className="size-3" aria-hidden />
+              </span>
             )}
           </span>
         </div>

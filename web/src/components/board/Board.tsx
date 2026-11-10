@@ -22,7 +22,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { MoreHorizontal, Plus } from 'lucide-react';
-import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { useMemo, useRef, useState, type KeyboardEvent, type UIEvent } from 'react';
 import type { Status, TaskListItem } from '@/api/client';
 import { STATUSES, STATUS_META, StatusIcon } from '@/components/tasks/badges';
 import { TaskCard } from '@/components/tasks/TaskCard';
@@ -205,6 +205,27 @@ export function Board({ tasks, onOpen, onMove, onAdd }: BoardProps) {
   const [local, setLocal] = useState<Columns | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
   const justDragged = useRef(false);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  // Phones show one column at a time; the dots below track and control which one is in view.
+  const [activeCol, setActiveCol] = useState(0);
+  const onScrollColumns = (e: UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    const columns = Array.from(el.querySelectorAll<HTMLElement>('section'));
+    const left = el.scrollLeft;
+    let best = 0;
+    columns.forEach((c, i) => {
+      const d = Math.abs(c.offsetLeft - el.offsetLeft - 16 - left);
+      const current = columns[best];
+      if (!current || d < Math.abs(current.offsetLeft - el.offsetLeft - 16 - left)) best = i;
+    });
+    setActiveCol(best);
+  };
+  const showColumn = (i: number) => {
+    const el = scrollerRef.current;
+    const target = el?.querySelectorAll<HTMLElement>('section')[i];
+    if (el && target)
+      el.scrollTo({ left: target.offsetLeft - el.offsetLeft - 16, behavior: 'smooth' });
+  };
   const cols = local ?? derived;
   const colsRef = useRef(cols);
   colsRef.current = cols;
@@ -346,22 +367,53 @@ export function Board({ tasks, onOpen, onMove, onAdd }: BoardProps) {
         },
       }}
     >
-      <div
-        data-testid={tid.boardView}
-        className="scrollbar-none flex h-full snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 pt-1 md:px-6"
-      >
-        {STATUSES.map((s) => (
-          <BoardColumn
-            key={s}
-            status={s}
-            ids={cols[s]}
-            byId={byId}
-            onOpen={onOpen}
-            onMoveTo={moveTo}
-            onAdd={onAdd}
-            canOpen={() => !justDragged.current}
-          />
-        ))}
+      <div className="flex h-full flex-col">
+        <div
+          ref={scrollerRef}
+          onScroll={onScrollColumns}
+          data-testid={tid.boardView}
+          className="scrollbar-none flex min-h-0 flex-1 snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 pt-1 md:px-6 md:pb-4"
+        >
+          {STATUSES.map((s) => (
+            <BoardColumn
+              key={s}
+              status={s}
+              ids={cols[s]}
+              byId={byId}
+              onOpen={onOpen}
+              onMoveTo={moveTo}
+              onAdd={onAdd}
+              canOpen={() => !justDragged.current}
+            />
+          ))}
+        </div>
+        <div
+          className="flex items-center justify-center gap-2 pb-3 md:hidden"
+          data-testid="board-column-dots"
+        >
+          <span className="sr-only" aria-live="polite">
+            Column {activeCol + 1} of {STATUSES.length}:{' '}
+            {STATUS_META[STATUSES[activeCol] ?? 'todo'].label}
+          </span>
+          {STATUSES.map((s, i) => (
+            <button
+              key={s}
+              type="button"
+              aria-label={`Show ${STATUS_META[s].label}`}
+              aria-current={i === activeCol}
+              onClick={() => showColumn(i)}
+              className="flex size-6 items-center justify-center"
+            >
+              <span
+                aria-hidden
+                className={cn(
+                  'h-2 rounded-full transition-all',
+                  i === activeCol ? 'w-5 bg-accent' : 'w-2 bg-border-strong',
+                )}
+              />
+            </button>
+          ))}
+        </div>
       </div>
       <DragOverlay dropAnimation={{ duration: 180 }}>
         {activeTask ? <TaskCard task={activeTask} overlay /> : null}
