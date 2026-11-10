@@ -136,7 +136,7 @@ The GitHub Actions workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.y
 
 ## Accessibility
 
-Contrast is checked against WCAG AA in both themes (the design tokens were adjusted where a pair failed), every input has a label, dialogs trap and restore focus, there is a skip link, focus is always visible, and status and priority never rely on colour alone (icon plus text). The board is fully usable from the keyboard. `npm run a11y` runs axe-core over every page and open dialog in light and dark on desktop and phone sizes and fails on serious or critical findings.
+Contrast is checked against WCAG AA in both themes (the design tokens were adjusted where a pair failed), every input has a label, dialogs trap and restore focus, there is a skip link, focus is always visible, and status and priority never rely on color alone (icon plus text). The board is fully usable from the keyboard. `npm run a11y` runs axe-core over every page and open dialog in light and dark on desktop and phone sizes and fails on serious or critical findings.
 
 ## Project layout
 
