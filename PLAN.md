@@ -427,7 +427,7 @@ Run the relevant tests after each task and commit before ticking the box.
 - [ ] 30. `[Opus]` `render.yaml` + `DEPLOY.md`. **Ask the owner before deploying.**
 
 ### Phase F — Polish and review
-- [ ] 31. `[Sonnet]` `scripts/screenshots.ts`; capture all pages (light/dark × desktop/mobile) into `docs/screenshots/`.
+- [x] 31. `[Sonnet]` `scripts/screenshots.ts`; capture all pages (light/dark × desktop/mobile) into `docs/screenshots/`. — *Done: `npm run screenshots` uses installed Chrome via playwright-core (no browser download); 44 PNGs in docs/screenshots, zero console errors.*
 - [ ] 32. `[Fable]` **Visual review** of every screenshot: list anything unfinished, cramped, misaligned or generic as numbered fixes below this list.
 - [ ] 33. `[Sonnet]` Apply the visual-review fixes; re-capture screenshots.
 - [ ] 34. `[Sonnet]` Landing page using the real screenshots (must come after 33).
@@ -438,3 +438,5 @@ Run the relevant tests after each task and commit before ticking the box.
 
 ### Notes / decisions log
 - *(add dated one-liners here when something deviates from the plan)*
+- 2026-11-10 `[Sonnet]` Observations for the Fable visual review (task 32): header avatar stack overlaps too tightly (initials clipped); on phones the filter bar takes a lot of vertical space above the board (consider collapsing behind a Filters button); low-priority icon looks very small; charts animate on load (screenshot script waits 700ms).
+- 2026-11-10 `[Sonnet]` Skipped (not mine): 17, 27-30, 32, 33, 35, 37, 38. Tasks 34 and 36 wait on 33 and on Docker/CI results. Web tests: 23 passing. API: 110 passing, 96% line coverage.

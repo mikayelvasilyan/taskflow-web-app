@@ -5,8 +5,13 @@
   "description": "TaskFlow - a task and project tracker for small teams (personal portfolio project)",
   "license": "MIT",
   "author": "Mikayel Vasilyan",
-  "engines": { "node": ">=22" },
-  "workspaces": ["api", "web"],
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "api",
+    "web"
+  ],
   "scripts": {
     "dev": "concurrently -n api,web -c blue,green \"npm run dev -w api\" \"npm run dev -w web\"",
     "lint": "npm run lint --workspaces --if-present",
@@ -18,6 +23,7 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.0",
+    "playwright-core": "^1.65.0",
     "prettier": "^3.4.0",
     "tsx": "^4.19.0"
   }
