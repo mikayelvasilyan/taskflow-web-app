@@ -1,0 +1,63 @@
+/* TaskFlow design tokens. Values come from PLAN.md section 7. */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface-2: #f1f3f6;
+  --border: #e3e6eb;
+  --border-strong: #cbd0d8;
+  --fg: #14171c;
+  --fg-muted: #5b6472;
+  --fg-subtle: #6e7786;
+  --accent: #2f5bea;
+  --accent-hover: #2449c8;
+  --accent-fg: #2f5bea;
+  --accent-soft: #eaf0ff;
+  --on-accent: #ffffff;
+  --success: #15803d;
+  --success-soft: #e7f6ec;
+  --warning: #b45309;
+  --warning-soft: #fdf3e1;
+  --danger: #dc2626;
+  --danger-soft: #fdecec;
+  --ring: #2f5bea;
+  --overlay: rgb(15 18 24 / 0.45);
+
+  --shadow-xs: 0 1px 2px rgb(16 24 40 / 0.06);
+  --shadow-sm: 0 2px 6px rgb(16 24 40 / 0.08);
+  --shadow-md: 0 8px 20px rgb(16 24 40 / 0.1);
+  --shadow-lg: 0 20px 48px rgb(16 24 40 / 0.18);
+  --shadow-drag: 0 18px 36px rgb(16 24 40 / 0.22);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0e1014;
+  --surface: #15181e;
+  --surface-2: #1c2028;
+  --border: #272c36;
+  --border-strong: #3a4150;
+  --fg: #eceef2;
+  --fg-muted: #9aa3b2;
+  --fg-subtle: #7f8898;
+  --accent: #2f5bea;
+  --accent-hover: #4369ee;
+  --accent-fg: #8fa5ff;
+  --accent-soft: #1a2444;
+  --on-accent: #ffffff;
+  --success: #4ade80;
+  --success-soft: #12301f;
+  --warning: #fbbf24;
+  --warning-soft: #33260b;
+  --danger: #f87171;
+  --danger-soft: #3a1616;
+  --ring: #8fa5ff;
+  --overlay: rgb(0 0 0 / 0.6);
+
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-sm: 0 2px 6px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 8px 20px rgb(0 0 0 / 0.45);
+  --shadow-lg: 0 20px 48px rgb(0 0 0 / 0.6);
+  --shadow-drag: 0 18px 36px rgb(0 0 0 / 0.6);
+}
