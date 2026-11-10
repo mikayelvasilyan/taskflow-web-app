@@ -388,9 +388,9 @@ Run the relevant tests after each task and commit before ticking the box.
 
 ### Phase A — Foundation
 - [x] 1. `[Fable]` Write `PLAN.md`. — *Done; repo initialised locally with the noreply author and `origin` remote, nothing committed or pushed.*
-- [ ] 2. `[Haiku]` Boilerplate: `LICENSE` (MIT, Mikayel Vasilyan), `.gitignore`, `.editorconfig`, `.nvmrc` (22), `.prettierrc`, `.env.example` (section 5), root `package.json` with workspaces and scripts.
-- [ ] 3. `[Sonnet]` API scaffold: TypeScript strict, ESLint, Vitest, `env.ts`, `createApp`, error middleware and `AppError`, `GET /api/health` + test.
-- [ ] 4. `[Sonnet]` DB: Drizzle schema (section 4), libSQL client, first migration, migrate-on-start, in-memory test helper. **If `@libsql/client` fails on Node 26/Windows, stop and report.**
+- [x] 2. `[Haiku]` Boilerplate: `LICENSE` (MIT, Mikayel Vasilyan), `.gitignore`, `.editorconfig`, `.nvmrc` (22), `.prettierrc`, `.env.example` (section 5), root `package.json` with workspaces and scripts. — *Done.*
+- [x] 3. `[Sonnet]` API scaffold: TypeScript strict, ESLint, Vitest, `env.ts`, `createApp`, error middleware and `AppError`, `GET /api/health` + test. — *Done: Express 5 app factory, error middleware, health, 10 tests.*
+- [x] 4. `[Sonnet]` DB: Drizzle schema (section 4), libSQL client, first migration, migrate-on-start, in-memory test helper. **If `@libsql/client` fails on Node 26/Windows, stop and report.** — *Done: libSQL works on Node 26 (no native compile); FK cascade verified.*
 
 ### Phase B — API
 - [ ] 5. `[Sonnet]` Auth: signup, login, logout, me, update me; JWT cookie + Bearer; bcryptjs; login rate limit; tests.
