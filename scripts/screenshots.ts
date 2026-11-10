@@ -53,9 +53,9 @@ async function newContext(
   return ctx;
 }
 
-async function shoot(page: Page, name: string, theme: string, vp: string) {
+async function shoot(page: Page, name: string, theme: string, vp: string, fullPage = false) {
   await page.waitForTimeout(700); // let charts and fonts settle
-  await page.screenshot({ path: path.join(OUT, `${name}-${theme}-${vp}.png`) });
+  await page.screenshot({ path: path.join(OUT, `${name}-${theme}-${vp}.png`), fullPage });
   console.log(`  captured ${name}-${theme}-${vp}`);
 }
 
@@ -78,7 +78,7 @@ async function main() {
           ['not-found', '/no-such-page'],
         ] as const) {
           await p1.goto(url, { waitUntil: 'networkidle' });
-          await shoot(p1, name, theme, vp);
+          await shoot(p1, name, theme, vp, name === 'landing');
         }
         await pub.close();
 
@@ -112,7 +112,65 @@ async function main() {
         await shoot(page, 'project-settings', theme, vp);
         await page.goto('/app/settings?tab=members', { waitUntil: 'networkidle' });
         await shoot(page, 'settings', theme, vp);
+        await page.goto('/app/settings?tab=profile', { waitUntil: 'networkidle' });
+        await shoot(page, 'settings-profile', theme, vp);
+        await page.goto('/app/settings?tab=appearance', { waitUntil: 'networkidle' });
+        await shoot(page, 'settings-appearance', theme, vp);
+
+        // Command palette with a query
+        await page.goto('/app/dashboard', { waitUntil: 'networkidle' });
+        await page.getByTestId('search-trigger').click();
+        await page.getByTestId('command-palette-input').fill('redirect');
+        await page.getByTestId('command-palette').getByText('Redirect map for old URLs').waitFor();
+        await shoot(page, 'command-palette', theme, vp);
+        await page.keyboard.press('Escape');
+
+        // New-task dialog
+        await page.goto(`${projectHref}/board`, { waitUntil: 'networkidle' });
+        await page.getByTestId('new-task-button').click();
+        await page.getByTestId('new-task-form').waitFor();
+        await shoot(page, 'new-task', theme, vp);
+        await page.keyboard.press('Escape');
+
+        // Phone-only: Projects sheet and the filter sheet
+        if (vp === 'mobile') {
+          await page.getByTestId('nav-link-projects').click();
+          await page.getByRole('dialog', { name: 'Projects' }).waitFor();
+          await shoot(page, 'projects-sheet', theme, vp);
+          await page.keyboard.press('Escape');
+          await page.getByTestId('filters-toggle').click();
+          await page.getByRole('dialog', { name: 'Filters' }).waitFor();
+          await shoot(page, 'filters-sheet', theme, vp);
+          await page.keyboard.press('Escape');
+        }
+
+        // Empty state: a brand-new project (removed again afterwards)
+        const created = await page.evaluate(async () => {
+          const r = await fetch('/api/projects', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: 'Launch Checklist' }),
+          });
+          return (await r.json()).project.id as string;
+        });
+        await page.goto(`/app/projects/${created}/board`, { waitUntil: 'networkidle' });
+        await shoot(page, 'board-empty', theme, vp);
+        await page.evaluate(async (id) => {
+          await fetch(`/api/projects/${id}`, { method: 'DELETE' });
+        }, created);
         await ctx.close();
+
+        // A regular member's view (no admin Members tab)
+        const memberCtx = await newContext(browser, theme, vp, false);
+        const mres = await memberCtx.request.post('/api/auth/login', {
+          data: { email: 'member@taskflow.dev', password: 'Member123!' },
+        });
+        if (!mres.ok()) throw new Error('Member demo login failed');
+        const mpage = await memberCtx.newPage();
+        watch(mpage, `member ${theme}/${vp}`);
+        await mpage.goto('/app/settings', { waitUntil: 'networkidle' });
+        await shoot(mpage, 'settings-member', theme, vp);
+        await memberCtx.close();
       }
     }
   } finally {
