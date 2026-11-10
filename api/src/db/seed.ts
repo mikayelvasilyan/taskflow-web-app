@@ -62,7 +62,7 @@ export async function seedDemo(db: Db, now: Date = new Date()) {
         name: p.name,
         passwordHash: hashes.get(p.password)!,
         role: p.role,
-        avatarColor: pickColor(p.email),
+        avatarColor: p.avatarColor,
         isProtected: p.isProtected,
         createdAt: iso(-(60 - i) * DAY),
       };

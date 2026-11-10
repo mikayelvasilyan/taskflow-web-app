@@ -7,6 +7,7 @@ export interface PersonSeed {
   name: string;
   email: string;
   password: string;
+  avatarColor: string;
   role: 'admin' | 'member';
   isProtected: boolean;
 }
@@ -18,6 +19,7 @@ export const PEOPLE: PersonSeed[] = [
     name: 'Alex Morgan',
     email: 'demo@taskflow.dev',
     password: 'Demo123!',
+    avatarColor: '#2F5BEA',
     role: 'admin',
     isProtected: true,
   },
@@ -26,6 +28,7 @@ export const PEOPLE: PersonSeed[] = [
     name: 'Sam Rivera',
     email: 'member@taskflow.dev',
     password: 'Member123!',
+    avatarColor: '#0E7490',
     role: 'member',
     isProtected: true,
   },
@@ -34,6 +37,7 @@ export const PEOPLE: PersonSeed[] = [
     name: 'Priya Shah',
     email: 'priya@taskflow.dev',
     password: 'Demo123!',
+    avatarColor: '#C2410C',
     role: 'member',
     isProtected: false,
   },
@@ -42,6 +46,7 @@ export const PEOPLE: PersonSeed[] = [
     name: 'Jonas Weber',
     email: 'jonas@taskflow.dev',
     password: 'Demo123!',
+    avatarColor: '#475569',
     role: 'member',
     isProtected: false,
   },
@@ -50,6 +55,7 @@ export const PEOPLE: PersonSeed[] = [
     name: 'Mei Tanaka',
     email: 'mei@taskflow.dev',
     password: 'Demo123!',
+    avatarColor: '#7C3AED',
     role: 'member',
     isProtected: false,
   },
@@ -58,6 +64,7 @@ export const PEOPLE: PersonSeed[] = [
     name: 'Lucas Oliveira',
     email: 'lucas@taskflow.dev',
     password: 'Demo123!',
+    avatarColor: '#A16207',
     role: 'member',
     isProtected: false,
   },

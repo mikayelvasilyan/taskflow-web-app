@@ -54,9 +54,15 @@ export function AvatarStack({ people, max = 4 }: { people: PersonLike[]; max?: n
   const shown = people.slice(0, max);
   const extra = people.length - shown.length;
   return (
-    <span className="inline-flex -space-x-1.5">
+    <span className="inline-flex -space-x-1">
       {shown.map((p, i) => (
-        <Avatar key={`${p.name}-${i}`} person={p} size="sm" />
+        <span
+          key={`${p.name}-${i}`}
+          className="relative inline-flex"
+          style={{ zIndex: shown.length - i }}
+        >
+          <Avatar person={p} size="sm" />
+        </span>
       ))}
       {extra > 0 && (
         <span className="inline-flex size-6 items-center justify-center rounded-full bg-surface-2 text-[11px] font-semibold text-fg-muted ring-2 ring-surface">
