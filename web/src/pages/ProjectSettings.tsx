@@ -174,23 +174,32 @@ export default function ProjectSettings() {
                   />
                 )}
               </Field>
-              <div role="radiogroup" aria-label="Project colour" className="flex flex-wrap gap-2">
-                {PROJECT_COLORS.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    role="radio"
-                    aria-checked={color === c}
-                    aria-label={`Colour ${c}`}
-                    disabled={!canManage}
-                    onClick={() => setColor(c)}
-                    style={{ backgroundColor: c }}
-                    className={cn(
-                      'size-7 rounded-full ring-offset-2 ring-offset-surface transition disabled:opacity-60',
-                      color === c && 'ring-2 ring-fg',
-                    )}
-                  />
-                ))}
+              <div className="flex flex-col gap-1.5">
+                <span id="project-colour-label" className="text-sm font-medium">
+                  Colour
+                </span>
+                <div
+                  role="radiogroup"
+                  aria-labelledby="project-colour-label"
+                  className="flex flex-wrap gap-2"
+                >
+                  {PROJECT_COLORS.map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      role="radio"
+                      aria-checked={color === c}
+                      aria-label={`Colour ${c}`}
+                      disabled={!canManage}
+                      onClick={() => setColor(c)}
+                      style={{ backgroundColor: c }}
+                      className={cn(
+                        'size-7 rounded-full ring-offset-2 ring-offset-surface transition disabled:opacity-60',
+                        color === c && 'ring-2 ring-fg',
+                      )}
+                    />
+                  ))}
+                </div>
               </div>
               {generalError && (
                 <p
@@ -235,12 +244,13 @@ export default function ProjectSettings() {
                     {canManage && m.id !== project.ownerId && (
                       <Button
                         variant="ghost"
-                        size="icon-sm"
+                        size="sm"
                         aria-label={`Remove ${m.name}`}
                         onClick={() => setToRemove({ id: m.id, name: m.name })}
                         data-testid={tid.memberRemove(m.id)}
                       >
                         <UserMinus className="size-4" aria-hidden />
+                        <span className="max-md:sr-only">Remove</span>
                       </Button>
                     )}
                   </li>

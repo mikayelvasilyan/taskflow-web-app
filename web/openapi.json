@@ -57,10 +57,7 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "admin",
-              "member"
-            ]
+            "enum": ["admin", "member"]
           },
           "avatarColor": {
             "type": "string"
@@ -69,14 +66,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "id",
-          "email",
-          "name",
-          "role",
-          "avatarColor",
-          "isProtected"
-        ]
+        "required": ["id", "email", "name", "role", "avatarColor", "isProtected"]
       },
       "ErrorResponse": {
         "type": "object",
@@ -111,22 +101,14 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "path",
-                    "message"
-                  ]
+                  "required": ["path", "message"]
                 }
               }
             },
-            "required": [
-              "code",
-              "message"
-            ]
+            "required": ["code", "message"]
           }
         },
-        "required": [
-          "error"
-        ]
+        "required": ["error"]
       },
       "Project": {
         "type": "object",
@@ -180,9 +162,7 @@
                 "type": "string"
               }
             },
-            "required": [
-              "joinedAt"
-            ]
+            "required": ["joinedAt"]
           }
         ]
       },
@@ -199,11 +179,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "color"
-        ]
+        "required": ["id", "name", "color"]
       },
       "Invite": {
         "type": "object",
@@ -224,13 +200,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "projectId",
-          "email",
-          "invitedById",
-          "createdAt"
-        ]
+        "required": ["id", "projectId", "email", "invitedById", "createdAt"]
       },
       "TaskListItem": {
         "type": "object",
@@ -253,26 +223,14 @@
           },
           "status": {
             "type": "string",
-            "enum": [
-              "todo",
-              "in_progress",
-              "done"
-            ]
+            "enum": ["todo", "in_progress", "done"]
           },
           "priority": {
             "type": "string",
-            "enum": [
-              "low",
-              "medium",
-              "high",
-              "urgent"
-            ]
+            "enum": ["low", "medium", "high", "urgent"]
           },
           "dueDate": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "example": "2026-03-14"
           },
           "position": {
@@ -297,10 +255,7 @@
             "type": "string"
           },
           "completedAt": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
         "required": [
@@ -322,10 +277,7 @@
         ]
       },
       "Person": {
-        "type": [
-          "object",
-          "null"
-        ],
+        "type": ["object", "null"],
         "properties": {
           "id": {
             "type": "string"
@@ -337,11 +289,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "avatarColor"
-        ]
+        "required": ["id", "name", "avatarColor"]
       },
       "TaskDetail": {
         "allOf": [
@@ -375,12 +323,7 @@
                       "$ref": "#/components/schemas/Person"
                     }
                   },
-                  "required": [
-                    "id",
-                    "body",
-                    "createdAt",
-                    "author"
-                  ]
+                  "required": ["id", "body", "createdAt", "author"]
                 }
               },
               "activity": {
@@ -404,10 +347,7 @@
                       ]
                     },
                     "data": {
-                      "type": [
-                        "object",
-                        "null"
-                      ],
+                      "type": ["object", "null"],
                       "additionalProperties": {}
                     },
                     "createdAt": {
@@ -417,22 +357,11 @@
                       "$ref": "#/components/schemas/Person"
                     }
                   },
-                  "required": [
-                    "id",
-                    "type",
-                    "data",
-                    "createdAt",
-                    "actor"
-                  ]
+                  "required": ["id", "type", "data", "createdAt", "actor"]
                 }
               }
             },
-            "required": [
-              "description",
-              "createdById",
-              "comments",
-              "activity"
-            ]
+            "required": ["description", "createdById", "comments", "activity"]
           }
         ]
       }
@@ -442,9 +371,7 @@
   "paths": {
     "/api/health": {
       "get": {
-        "tags": [
-          "System"
-        ],
+        "tags": ["System"],
         "summary": "Health check",
         "security": [],
         "responses": {
@@ -468,12 +395,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "status",
-                    "version",
-                    "uptime",
-                    "db"
-                  ]
+                  "required": ["status", "version", "uptime", "db"]
                 }
               }
             }
@@ -483,9 +405,7 @@
     },
     "/api/auth/signup": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Create an account (sets httpOnly cookie)",
         "security": [],
         "requestBody": {
@@ -510,11 +430,7 @@
                     "pattern": "[A-Za-z]"
                   }
                 },
-                "required": [
-                  "name",
-                  "email",
-                  "password"
-                ]
+                "required": ["name", "email", "password"]
               }
             }
           }
@@ -534,10 +450,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "user",
-                    "token"
-                  ]
+                  "required": ["user", "token"]
                 }
               }
             }
@@ -577,9 +490,7 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Log in (sets httpOnly cookie)",
         "security": [],
         "requestBody": {
@@ -597,10 +508,7 @@
                     "minLength": 1
                   }
                 },
-                "required": [
-                  "email",
-                  "password"
-                ]
+                "required": ["email", "password"]
               }
             }
           }
@@ -620,10 +528,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "user",
-                    "token"
-                  ]
+                  "required": ["user", "token"]
                 }
               }
             }
@@ -663,9 +568,7 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Log out (clears the cookie)",
         "security": [],
         "responses": {
@@ -677,9 +580,7 @@
     },
     "/api/auth/me": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Current user",
         "security": [
           {
@@ -701,9 +602,7 @@
                       "$ref": "#/components/schemas/User"
                     }
                   },
-                  "required": [
-                    "user"
-                  ]
+                  "required": ["user"]
                 }
               }
             }
@@ -721,9 +620,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Update profile or password",
         "security": [
           {
@@ -771,9 +668,7 @@
                       "$ref": "#/components/schemas/User"
                     }
                   },
-                  "required": [
-                    "user"
-                  ]
+                  "required": ["user"]
                 }
               }
             }
@@ -813,9 +708,7 @@
     },
     "/api/users": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "List all users (admin)",
         "security": [
           {
@@ -850,18 +743,13 @@
                                 "type": "integer"
                               }
                             },
-                            "required": [
-                              "createdAt",
-                              "projectCount"
-                            ]
+                            "required": ["createdAt", "projectCount"]
                           }
                         ]
                       }
                     }
                   },
-                  "required": [
-                    "users"
-                  ]
+                  "required": ["users"]
                 }
               }
             }
@@ -891,9 +779,7 @@
     },
     "/api/users/{id}": {
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Change a user role (admin)",
         "security": [
           {
@@ -922,15 +808,10 @@
                 "properties": {
                   "role": {
                     "type": "string",
-                    "enum": [
-                      "admin",
-                      "member"
-                    ]
+                    "enum": ["admin", "member"]
                   }
                 },
-                "required": [
-                  "role"
-                ]
+                "required": ["role"]
               }
             }
           }
@@ -947,9 +828,7 @@
                       "$ref": "#/components/schemas/User"
                     }
                   },
-                  "required": [
-                    "user"
-                  ]
+                  "required": ["user"]
                 }
               }
             }
@@ -997,9 +876,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Remove a user (admin; not self or protected accounts)",
         "security": [
           {
@@ -1068,9 +945,7 @@
     },
     "/api/projects": {
       "get": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "List visible projects with counts",
         "security": [
           {
@@ -1111,28 +986,19 @@
                                     "type": "number"
                                   }
                                 },
-                                "required": [
-                                  "todo",
-                                  "in_progress",
-                                  "done"
-                                ]
+                                "required": ["todo", "in_progress", "done"]
                               },
                               "memberCount": {
                                 "type": "integer"
                               }
                             },
-                            "required": [
-                              "taskCounts",
-                              "memberCount"
-                            ]
+                            "required": ["taskCounts", "memberCount"]
                           }
                         ]
                       }
                     }
                   },
-                  "required": [
-                    "projects"
-                  ]
+                  "required": ["projects"]
                 }
               }
             }
@@ -1150,9 +1016,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Create a project",
         "security": [
           {
@@ -1183,9 +1047,7 @@
                     "pattern": "^#[0-9a-fA-F]{6}$"
                   }
                 },
-                "required": [
-                  "name"
-                ]
+                "required": ["name"]
               }
             }
           }
@@ -1202,9 +1064,7 @@
                       "$ref": "#/components/schemas/Project"
                     }
                   },
-                  "required": [
-                    "project"
-                  ]
+                  "required": ["project"]
                 }
               }
             }
@@ -1234,9 +1094,7 @@
     },
     "/api/projects/{id}": {
       "get": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Project with members and labels",
         "security": [
           {
@@ -1292,25 +1150,18 @@
                                         "type": "string"
                                       }
                                     },
-                                    "required": [
-                                      "projectId"
-                                    ]
+                                    "required": ["projectId"]
                                   }
                                 ]
                               }
                             }
                           },
-                          "required": [
-                            "members",
-                            "labels"
-                          ]
+                          "required": ["members", "labels"]
                         }
                       ]
                     }
                   },
-                  "required": [
-                    "project"
-                  ]
+                  "required": ["project"]
                 }
               }
             }
@@ -1348,9 +1199,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Rename or edit a project (owner/admin)",
         "security": [
           {
@@ -1407,9 +1256,7 @@
                       "$ref": "#/components/schemas/Project"
                     }
                   },
-                  "required": [
-                    "project"
-                  ]
+                  "required": ["project"]
                 }
               }
             }
@@ -1457,9 +1304,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Delete a project (owner/admin)",
         "security": [
           {
@@ -1518,9 +1363,7 @@
     },
     "/api/projects/{id}/members": {
       "get": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Members and pending invites",
         "security": [
           {
@@ -1561,10 +1404,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "members",
-                    "invites"
-                  ]
+                  "required": ["members", "invites"]
                 }
               }
             }
@@ -1604,9 +1444,7 @@
     },
     "/api/projects/{id}/invites": {
       "post": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Invite by email (existing users are added immediately; nothing is emailed)",
         "security": [
           {
@@ -1637,9 +1475,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "email"
-                ]
+                "required": ["email"]
               }
             }
           }
@@ -1718,9 +1554,7 @@
     },
     "/api/projects/{id}/invites/{inviteId}": {
       "delete": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Revoke a pending invite (owner/admin)",
         "security": [
           {
@@ -1787,9 +1621,7 @@
     },
     "/api/projects/{id}/members/{userId}": {
       "delete": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Remove a member (owner/admin; unassigns their tasks)",
         "security": [
           {
@@ -1866,9 +1698,7 @@
     },
     "/api/projects/{id}/labels": {
       "get": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "List labels",
         "security": [
           {
@@ -1910,17 +1740,13 @@
                                 "type": "string"
                               }
                             },
-                            "required": [
-                              "projectId"
-                            ]
+                            "required": ["projectId"]
                           }
                         ]
                       }
                     }
                   },
-                  "required": [
-                    "labels"
-                  ]
+                  "required": ["labels"]
                 }
               }
             }
@@ -1958,9 +1784,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Create a label",
         "security": [
           {
@@ -1997,10 +1821,7 @@
                     "pattern": "^#[0-9a-fA-F]{6}$"
                   }
                 },
-                "required": [
-                  "name",
-                  "color"
-                ]
+                "required": ["name", "color"]
               }
             }
           }
@@ -2025,16 +1846,12 @@
                               "type": "string"
                             }
                           },
-                          "required": [
-                            "projectId"
-                          ]
+                          "required": ["projectId"]
                         }
                       ]
                     }
                   },
-                  "required": [
-                    "label"
-                  ]
+                  "required": ["label"]
                 }
               }
             }
@@ -2094,9 +1911,7 @@
     },
     "/api/projects/{id}/tasks": {
       "get": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "List tasks in a project (filter, search, sort)",
         "security": [
           {
@@ -2118,11 +1933,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "todo",
-                "in_progress",
-                "done"
-              ]
+              "enum": ["todo", "in_progress", "done"]
             },
             "required": false,
             "name": "status",
@@ -2131,12 +1942,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "low",
-                "medium",
-                "high",
-                "urgent"
-              ]
+              "enum": ["low", "medium", "high", "urgent"]
             },
             "required": false,
             "name": "priority",
@@ -2172,10 +1978,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "true",
-                "false"
-              ]
+              "enum": ["true", "false"]
             },
             "required": false,
             "name": "overdue",
@@ -2184,14 +1987,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "position",
-                "dueDate",
-                "priority",
-                "status",
-                "createdAt",
-                "title"
-              ]
+              "enum": ["position", "dueDate", "priority", "status", "createdAt", "title"]
             },
             "required": false,
             "name": "sort",
@@ -2200,10 +1996,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "required": false,
             "name": "order",
@@ -2225,9 +2018,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "tasks"
-                  ]
+                  "required": ["tasks"]
                 }
               }
             }
@@ -2275,9 +2066,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Create a task",
         "security": [
           {
@@ -2315,33 +2104,18 @@
                   },
                   "status": {
                     "type": "string",
-                    "enum": [
-                      "todo",
-                      "in_progress",
-                      "done"
-                    ]
+                    "enum": ["todo", "in_progress", "done"]
                   },
                   "priority": {
                     "type": "string",
-                    "enum": [
-                      "low",
-                      "medium",
-                      "high",
-                      "urgent"
-                    ]
+                    "enum": ["low", "medium", "high", "urgent"]
                   },
                   "dueDate": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
                   },
                   "assigneeId": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "minLength": 1
                   },
                   "labelIds": {
@@ -2353,9 +2127,7 @@
                     "maxItems": 20
                   }
                 },
-                "required": [
-                  "title"
-                ]
+                "required": ["title"]
               }
             }
           }
@@ -2372,9 +2144,7 @@
                       "$ref": "#/components/schemas/TaskDetail"
                     }
                   },
-                  "required": [
-                    "task"
-                  ]
+                  "required": ["task"]
                 }
               }
             }
@@ -2424,9 +2194,7 @@
     },
     "/api/tasks": {
       "get": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "List tasks across visible projects (use assignee=me for My tasks)",
         "security": [
           {
@@ -2440,11 +2208,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "todo",
-                "in_progress",
-                "done"
-              ]
+              "enum": ["todo", "in_progress", "done"]
             },
             "required": false,
             "name": "status",
@@ -2453,12 +2217,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "low",
-                "medium",
-                "high",
-                "urgent"
-              ]
+              "enum": ["low", "medium", "high", "urgent"]
             },
             "required": false,
             "name": "priority",
@@ -2494,10 +2253,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "true",
-                "false"
-              ]
+              "enum": ["true", "false"]
             },
             "required": false,
             "name": "overdue",
@@ -2506,14 +2262,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "position",
-                "dueDate",
-                "priority",
-                "status",
-                "createdAt",
-                "title"
-              ]
+              "enum": ["position", "dueDate", "priority", "status", "createdAt", "title"]
             },
             "required": false,
             "name": "sort",
@@ -2522,10 +2271,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "required": false,
             "name": "order",
@@ -2547,9 +2293,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "tasks"
-                  ]
+                  "required": ["tasks"]
                 }
               }
             }
@@ -2579,9 +2323,7 @@
     },
     "/api/tasks/{id}": {
       "get": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Task with comments and activity",
         "security": [
           {
@@ -2613,9 +2355,7 @@
                       "$ref": "#/components/schemas/TaskDetail"
                     }
                   },
-                  "required": [
-                    "task"
-                  ]
+                  "required": ["task"]
                 }
               }
             }
@@ -2653,9 +2393,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Update a task (also used for drag-and-drop moves)",
         "security": [
           {
@@ -2693,33 +2431,18 @@
                   },
                   "status": {
                     "type": "string",
-                    "enum": [
-                      "todo",
-                      "in_progress",
-                      "done"
-                    ]
+                    "enum": ["todo", "in_progress", "done"]
                   },
                   "priority": {
                     "type": "string",
-                    "enum": [
-                      "low",
-                      "medium",
-                      "high",
-                      "urgent"
-                    ]
+                    "enum": ["low", "medium", "high", "urgent"]
                   },
                   "dueDate": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
                   },
                   "assigneeId": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "minLength": 1
                   },
                   "labelIds": {
@@ -2750,9 +2473,7 @@
                       "$ref": "#/components/schemas/TaskDetail"
                     }
                   },
-                  "required": [
-                    "task"
-                  ]
+                  "required": ["task"]
                 }
               }
             }
@@ -2800,9 +2521,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Delete a task",
         "security": [
           {
@@ -2861,9 +2580,7 @@
     },
     "/api/tasks/{id}/comments": {
       "post": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Add a comment",
         "security": [
           {
@@ -2896,9 +2613,7 @@
                     "maxLength": 2000
                   }
                 },
-                "required": [
-                  "body"
-                ]
+                "required": ["body"]
               }
             }
           }
@@ -2927,17 +2642,10 @@
                           "$ref": "#/components/schemas/Person"
                         }
                       },
-                      "required": [
-                        "id",
-                        "body",
-                        "createdAt",
-                        "author"
-                      ]
+                      "required": ["id", "body", "createdAt", "author"]
                     }
                   },
-                  "required": [
-                    "comment"
-                  ]
+                  "required": ["comment"]
                 }
               }
             }
@@ -2987,9 +2695,7 @@
     },
     "/api/comments/{id}": {
       "delete": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Delete a comment (author or admin)",
         "security": [
           {
@@ -3048,9 +2754,7 @@
     },
     "/api/dashboard": {
       "get": {
-        "tags": [
-          "Dashboard"
-        ],
+        "tags": ["Dashboard"],
         "summary": "Counts, charts data, overdue and my tasks",
         "security": [
           {
@@ -3084,12 +2788,7 @@
                           "type": "number"
                         }
                       },
-                      "required": [
-                        "todo",
-                        "in_progress",
-                        "done",
-                        "overdue"
-                      ]
+                      "required": ["todo", "in_progress", "done", "overdue"]
                     },
                     "byPriority": {
                       "type": "object",
@@ -3107,12 +2806,7 @@
                           "type": "number"
                         }
                       },
-                      "required": [
-                        "low",
-                        "medium",
-                        "high",
-                        "urgent"
-                      ]
+                      "required": ["low", "medium", "high", "urgent"]
                     },
                     "completedByDay": {
                       "type": "array",
@@ -3126,10 +2820,7 @@
                             "type": "number"
                           }
                         },
-                        "required": [
-                          "date",
-                          "count"
-                        ]
+                        "required": ["date", "count"]
                       }
                     },
                     "insights": {
@@ -3145,10 +2836,7 @@
                           "type": "number"
                         },
                         "oldestOverdueDays": {
-                          "type": [
-                            "number",
-                            "null"
-                          ]
+                          "type": ["number", "null"]
                         }
                       },
                       "required": [
@@ -3198,9 +2886,7 @@
     },
     "/api/search": {
       "get": {
-        "tags": [
-          "Dashboard"
-        ],
+        "tags": ["Dashboard"],
         "summary": "Search projects and tasks (command palette)",
         "security": [
           {
@@ -3246,12 +2932,7 @@
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "id",
-                          "name",
-                          "key",
-                          "color"
-                        ]
+                        "required": ["id", "name", "key", "color"]
                       }
                     },
                     "tasks": {
@@ -3261,10 +2942,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "projects",
-                    "tasks"
-                  ]
+                  "required": ["projects", "tasks"]
                 }
               }
             }

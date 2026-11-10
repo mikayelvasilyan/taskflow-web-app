@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react';
-import { NavLink, Outlet, useOutletContext, useParams } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useOutletContext, useParams } from 'react-router-dom';
 import { isApiError, type ProjectDetail } from '@/api/client';
 import { useProject } from '@/api/queries/projects';
 import { AvatarStack } from '@/components/common/Avatar';
@@ -29,6 +29,7 @@ const tab = ({ isActive }: { isActive: boolean }) =>
 export default function ProjectLayout() {
   const { projectId = '' } = useParams();
   const query = useProject(projectId);
+  const onSettingsTab = useLocation().pathname.endsWith('/settings');
   const { newTaskOpen, newTaskStatus, setNewTaskOpen, openNewTask } = useShell();
 
   if (query.isLoading) {
@@ -82,14 +83,16 @@ export default function ProjectLayout() {
             </span>
           }
           actions={
-            <Button
-              variant="primary"
-              onClick={() => openNewTask('todo')}
-              data-testid={tid.newTaskButton}
-            >
-              <Plus className="size-4" aria-hidden />
-              <span className="max-sm:sr-only">New task</span>
-            </Button>
+            onSettingsTab ? undefined : (
+              <Button
+                variant="primary"
+                onClick={() => openNewTask('todo')}
+                data-testid={tid.newTaskButton}
+              >
+                <Plus className="size-4" aria-hidden />
+                <span className="max-sm:sr-only">New task</span>
+              </Button>
+            )
           }
         />
         <nav

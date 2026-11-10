@@ -27,7 +27,7 @@ export default function ProjectList() {
       <div className="px-4 md:px-6">
         <FilterBar members={project.members} />
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 md:px-6">
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-10 md:px-6">
         {tasks.isLoading ? (
           <div data-testid={tid.skeleton('list')} className="flex flex-col gap-2">
             {[0, 1, 2, 3, 4, 5].map((i) => (

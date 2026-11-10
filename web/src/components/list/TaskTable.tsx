@@ -98,12 +98,12 @@ export function TaskTable({
               data-priority={t.priority}
               data-overdue={isOverdue(t.dueDate, t.status)}
               onClick={() => onOpen(t.id)}
-              className="cursor-pointer border-b border-border last:border-0 hover:bg-surface-2 max-md:grid max-md:grid-cols-[1fr_auto] max-md:gap-x-3 max-md:gap-y-1.5 max-md:border-0 max-md:p-3"
+              className="cursor-pointer border-b border-border last:border-0 hover:bg-surface-2 max-md:flex max-md:flex-wrap max-md:items-center max-md:gap-x-3 max-md:gap-y-2 max-md:border-0 max-md:px-4 max-md:py-3"
             >
-              <td className="tabular w-24 px-3 py-2.5 text-xs font-medium text-fg-subtle max-md:order-1 max-md:w-auto max-md:p-0">
+              <td className="tabular w-24 px-3 py-2.5 align-middle text-xs font-medium text-fg-subtle max-md:order-1 max-md:w-auto max-md:flex-1 max-md:p-0">
                 {t.key}
               </td>
-              <td className="px-3 py-2.5 max-md:order-2 max-md:col-span-2 max-md:p-0">
+              <td className="px-3 py-2.5 align-middle max-md:order-3 max-md:basis-full max-md:p-0">
                 <button
                   type="button"
                   onClick={(e) => {
@@ -116,30 +116,35 @@ export function TaskTable({
                   {t.title}
                 </button>
                 {t.labels.length > 0 && (
-                  <span className="ml-2 inline-flex flex-wrap gap-1 align-middle">
-                    {t.labels.map((l) => (
+                  <div className="mt-1 flex flex-wrap gap-1 max-md:hidden">
+                    {t.labels.slice(0, 2).map((l) => (
                       <LabelChip key={l.id} label={l} />
                     ))}
-                  </span>
+                    {t.labels.length > 2 && (
+                      <span className="inline-flex items-center rounded-full bg-surface-2 px-2 py-0.5 text-xs font-medium text-fg-muted">
+                        +{t.labels.length - 2}
+                      </span>
+                    )}
+                  </div>
                 )}
               </td>
-              <td className="px-3 py-2.5 max-md:order-3 max-md:p-0">
+              <td className="px-3 py-2.5 align-middle max-md:order-4 max-md:p-0">
                 <StatusBadge status={t.status} />
               </td>
-              <td className="px-3 py-2.5 max-md:order-4 max-md:p-0 max-md:text-right">
+              <td className="px-3 py-2.5 align-middle max-md:order-5 max-md:p-0">
                 <PriorityBadge priority={t.priority} />
               </td>
-              <td className="px-3 py-2.5 max-md:order-5 max-md:p-0">
+              <td className="px-3 py-2.5 align-middle max-md:order-6 max-md:ml-auto max-md:p-0">
                 {t.assignee ? (
                   <span className="inline-flex items-center gap-2">
                     <Avatar person={t.assignee} size="sm" className="ring-0" />
                     <span className="text-sm text-fg-muted max-lg:sr-only">{t.assignee.name}</span>
                   </span>
                 ) : (
-                  <span className="text-sm text-fg-subtle">Unassigned</span>
+                  <span className="text-sm text-fg-subtle max-md:hidden">Unassigned</span>
                 )}
               </td>
-              <td className="px-3 py-2.5 max-md:order-6 max-md:p-0 max-md:text-right">
+              <td className="px-3 py-2.5 align-middle max-md:order-2 max-md:p-0 max-md:text-right">
                 {t.dueDate ? (
                   <DueDate date={t.dueDate} status={t.status} className="text-sm" />
                 ) : (

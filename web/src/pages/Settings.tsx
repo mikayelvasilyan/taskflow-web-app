@@ -239,12 +239,12 @@ function MembersTab() {
                   data-testid={tid.userRow(u.id)}
                   className="border-b border-border last:border-0 max-md:flex max-md:flex-wrap max-md:items-center max-md:gap-3 max-md:p-3"
                 >
-                  <td className="px-4 py-2.5 max-md:p-0">
-                    <span className="flex items-center gap-3">
+                  <td className="px-4 py-2.5 max-md:min-w-0 max-md:basis-full max-md:p-0">
+                    <span className="flex min-w-0 items-center gap-3">
                       <Avatar person={u} size="md" className="ring-0" />
-                      <span className="flex flex-col">
-                        <span className="font-medium">{u.name}</span>
-                        <span className="text-sm text-fg-muted">{u.email}</span>
+                      <span className="flex min-w-0 flex-col">
+                        <span className="truncate font-medium">{u.name}</span>
+                        <span className="truncate text-sm text-fg-muted">{u.email}</span>
                       </span>
                     </span>
                   </td>
@@ -254,7 +254,7 @@ function MembersTab() {
                       value={u.role}
                       disabled={locked || setRole.isPending}
                       data-testid={tid.memberRole(u.id)}
-                      className="w-32"
+                      className="w-32 max-md:w-36"
                       onValueChange={(role) =>
                         setRole.mutate(
                           { id: u.id, role: role as Role },
@@ -276,10 +276,10 @@ function MembersTab() {
                       ]}
                     />
                   </td>
-                  <td className="tabular px-4 py-2.5 text-right text-fg-muted max-md:p-0">
-                    {u.projectCount} projects
+                  <td className="tabular px-4 py-2.5 text-right text-fg-muted max-md:flex-1 max-md:p-0 max-md:text-left">
+                    {u.projectCount} {u.projectCount === 1 ? 'project' : 'projects'}
                   </td>
-                  <td className="px-4 py-2.5 text-right max-md:ml-auto max-md:p-0">
+                  <td className="px-4 py-2.5 text-right max-md:p-0">
                     <Button
                       variant="ghost"
                       size="icon-sm"
