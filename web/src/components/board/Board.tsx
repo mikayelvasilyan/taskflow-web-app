@@ -11,6 +11,7 @@ import {
   type DragEndEvent,
   type DragOverEvent,
   type DragStartEvent,
+  type KeyboardCoordinateGetter,
 } from '@dnd-kit/core';
 import {
   SortableContext,
@@ -205,13 +206,30 @@ export function Board({ tasks, onOpen, onMove, onAdd }: BoardProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const justDragged = useRef(false);
   const cols = local ?? derived;
+  const colsRef = useRef(cols);
+  colsRef.current = cols;
+
+  // Left/Right jump to the neighbouring column; Up/Down use the default sortable behaviour.
+  // (The default getter alone picks targets inside the same column when moving sideways.)
+  const boardKeyboardCoordinates: KeyboardCoordinateGetter = (event, args) => {
+    const step = event.code === 'ArrowRight' ? 1 : event.code === 'ArrowLeft' ? -1 : 0;
+    if (!step) return sortableKeyboardCoordinates(event, args);
+    const { active, droppableRects } = args.context;
+    if (!active) return undefined;
+    event.preventDefault();
+    const current = findContainer(String(active.id), colsRef.current);
+    const target = current ? STATUSES[STATUSES.indexOf(current) + step] : undefined;
+    const rect = target ? droppableRects.get(columnId(target)) : undefined;
+    if (!rect) return args.currentCoordinates;
+    return { x: rect.left + 2, y: rect.top + 2 };
+  };
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 8 } }),
     useSensor(KeyboardSensor, {
       keyboardCodes: { start: ['Space'], cancel: ['Escape'], end: ['Space', 'Tab'] },
-      coordinateGetter: sortableKeyboardCoordinates,
+      coordinateGetter: boardKeyboardCoordinates,
     }),
   );
 

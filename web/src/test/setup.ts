@@ -1,7 +1,11 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup } from '@testing-library/react';
+import { cleanup, configure } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll } from 'vitest';
 import { server } from './msw/server';
+
+// Lazy routes (the dashboard pulls in Recharts) can take over 1s to import in jsdom under a
+// parallel run, so the default 1s findBy timeout made the login flow test flaky.
+configure({ asyncUtilTimeout: 5000 });
 
 // jsdom lacks several browser APIs that Radix, cmdk, dnd-kit and Recharts rely on.
 if (!window.matchMedia) {

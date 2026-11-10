@@ -72,8 +72,8 @@ describe('Board', () => {
 
   it('moves a task to another status from the "Move to" menu (no drag needed)', async () => {
     const onMove = setup();
-    await userEvent.click(screen.getByTestId('task-card-move-a'));
-    await userEvent.click(await screen.findByTestId('task-card-move-a-done'));
+    await userEvent.click(screen.getByTestId('task-move-a'));
+    await userEvent.click(await screen.findByTestId('task-move-a-done'));
     expect(onMove).toHaveBeenCalledWith({ id: 'a', status: 'done', position: 1024 });
   });
 });
