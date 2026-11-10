@@ -21,7 +21,7 @@ export function DialogContent({
       <DialogPrimitive.Content
         className={cn(
           // Centered dialog on larger screens, bottom sheet on phones.
-          'fixed z-50 flex max-h-[90dvh] w-[calc(100%-2rem)] max-w-md flex-col gap-4 overflow-y-auto rounded-lg border border-border bg-surface p-6 shadow-lg',
+          'fixed z-50 flex max-h-[90dvh] outline-none w-[calc(100%-2rem)] max-w-md flex-col gap-4 overflow-y-auto rounded-lg border border-border bg-surface p-6 shadow-lg',
           'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 data-[state=open]:animate-dialog-in data-[state=closed]:animate-dialog-out',
           'max-md:bottom-0 max-md:left-0 max-md:top-auto max-md:w-full max-md:max-w-none max-md:translate-x-0 max-md:translate-y-0 max-md:rounded-b-none max-md:data-[state=open]:animate-sheet-in',
           className,
@@ -79,7 +79,7 @@ export function SheetContent({
       <DialogPrimitive.Overlay className={overlay} />
       <DialogPrimitive.Content
         className={cn(
-          'fixed inset-y-0 right-0 z-50 flex w-full flex-col border-l border-border bg-surface shadow-lg md:w-[480px]',
+          'fixed inset-y-0 right-0 z-50 flex w-full flex-col outline-none border-l border-border bg-surface shadow-lg md:w-[480px]',
           'data-[state=open]:animate-sheet-in data-[state=closed]:animate-sheet-out',
           className,
         )}

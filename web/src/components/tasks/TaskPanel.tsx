@@ -1,5 +1,5 @@
-import { MoreHorizontal, Tag, Trash2, X } from 'lucide-react';
-import { useEffect, useState, type ReactNode } from 'react';
+import { CalendarDays, MoreHorizontal, Tag, Trash2, X } from 'lucide-react';
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
 import {
@@ -38,7 +38,7 @@ import { Checkbox, Skeleton, Tabs, TabsList, TabsTrigger } from '@/components/ui
 import { useAuth } from '@/hooks/useAuth';
 import { useTaskFilters } from '@/hooks/useTaskFilters';
 import { cn } from '@/lib/cn';
-import { formatShortDate, timeAgo } from '@/lib/dates';
+import { formatShortDate, relativeDue, timeAgo } from '@/lib/dates';
 import { tid } from '@/lib/testids';
 import {
   LabelChip,
@@ -82,6 +82,65 @@ function describe(a: TaskDetail['activity'][number]): string {
   }
 }
 
+function DueDateField({
+  task,
+  onChange,
+}: {
+  task: TaskDetail;
+  onChange: (value: string | null) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const due = task.dueDate ? relativeDue(task.dueDate, task.status) : null;
+  const tone =
+    due?.tone === 'overdue' ? 'text-danger' : due?.tone === 'today' ? 'text-warning' : 'text-fg';
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          aria-label="Change due date"
+          className="-mx-2 inline-flex h-8 items-center gap-2 rounded-md px-2 text-base hover:bg-surface-2"
+        >
+          <CalendarDays className="size-4 text-fg-muted" aria-hidden />
+          {task.dueDate && due ? (
+            <span className={cn('tabular', tone)}>
+              {due.label}
+              {due.tone !== 'normal' && due.tone !== 'done' && (
+                <span className="text-fg-muted"> · {formatShortDate(task.dueDate)}</span>
+              )}
+            </span>
+          ) : (
+            <span className="text-fg-subtle">No date</span>
+          )}
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className="flex w-56 flex-col gap-2">
+        <Input
+          type="date"
+          aria-label="Due date"
+          value={task.dueDate ?? ''}
+          onChange={(e) => {
+            onChange(e.target.value || null);
+            if (e.target.value) setOpen(false);
+          }}
+          data-testid={tid.taskDue}
+        />
+        {task.dueDate && (
+          <Button
+            size="sm"
+            onClick={() => {
+              onChange(null);
+              setOpen(false);
+            }}
+          >
+            Clear date
+          </Button>
+        )}
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function Description({
   task,
   onSave,
@@ -89,10 +148,20 @@ function Description({
   task: TaskDetail;
   onSave: (text: string) => Promise<unknown>;
 }) {
-  const [tab, setTab] = useState<'write' | 'preview'>('write');
+  const [tab, setTab] = useState<'write' | 'preview'>(
+    task.description.trim() ? 'preview' : 'write',
+  );
+  const areaRef = useRef<HTMLTextAreaElement>(null);
   const [text, setText] = useState(task.description);
   const [saving, setSaving] = useState(false);
   useEffect(() => setText(task.description), [task.description]);
+  // Grow with the content (6 to ~16 lines) so text is never cut off mid-line.
+  useLayoutEffect(() => {
+    const el = areaRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(Math.max(el.scrollHeight, 144), 400)}px`;
+  }, [text, tab]);
   const dirty = text !== task.description;
 
   return (
@@ -104,7 +173,7 @@ function Description({
         <Tabs value={tab} onValueChange={(v) => setTab(v as 'write' | 'preview')}>
           <TabsList className="h-8">
             <TabsTrigger value="write" data-testid={tid.taskDescriptionTab('write')}>
-              Write
+              Edit
             </TabsTrigger>
             <TabsTrigger value="preview" data-testid={tid.taskDescriptionTab('preview')}>
               Preview
@@ -115,8 +184,10 @@ function Description({
       {tab === 'write' ? (
         <>
           <Textarea
+            ref={areaRef}
             aria-label="Description"
             rows={6}
+            className="resize-none overflow-y-auto"
             placeholder="Add details. Markdown is supported."
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -167,6 +238,7 @@ function Comments({ task }: { task: TaskDetail }) {
   const add = useAddComment(task.id);
   const remove = useDeleteComment(task.id);
   const [body, setBody] = useState('');
+  const [focused, setFocused] = useState(false);
 
   const submit = async () => {
     if (!body.trim()) return;
@@ -215,7 +287,10 @@ function Comments({ task }: { task: TaskDetail }) {
       <div className="flex flex-col gap-2">
         <Textarea
           aria-label="Add a comment"
-          rows={2}
+          rows={focused || body ? 3 : 1}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          className="min-h-10"
           placeholder="Write a comment"
           value={body}
           onChange={(e) => setBody(e.target.value)}
@@ -227,7 +302,7 @@ function Comments({ task }: { task: TaskDetail }) {
         <Button
           variant="primary"
           size="sm"
-          className="self-end"
+          className={cn('self-end', !focused && !body && 'hidden')}
           loading={add.isPending}
           disabled={!body.trim()}
           onClick={submit}
@@ -393,28 +468,10 @@ function PanelBody({
             />
           </PropertyRow>
           <PropertyRow label="Due date">
-            <div className="flex items-center gap-1">
-              <Input
-                type="date"
-                aria-label="Due date"
-                value={task.dueDate ?? ''}
-                onChange={(e) =>
-                  void save({ dueDate: e.target.value || null }).catch(() => undefined)
-                }
-                data-testid={tid.taskDue}
-                className="h-8 w-auto -mx-2 border-transparent px-2 shadow-none hover:border-border"
-              />
-              {task.dueDate && (
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label="Clear due date"
-                  onClick={() => void save({ dueDate: null }).catch(() => undefined)}
-                >
-                  <X className="size-3.5" aria-hidden />
-                </Button>
-              )}
-            </div>
+            <DueDateField
+              task={task}
+              onChange={(dueDate) => void save({ dueDate }).catch(() => undefined)}
+            />
           </PropertyRow>
           <PropertyRow label="Labels">
             <Popover>
@@ -542,7 +599,7 @@ export function TaskPanel({ project }: { project: ProjectDetail }) {
         )}
         {task.data &&
           (task.data.projectId === project.id ? (
-            <PanelBody task={task.data} project={project} close={closeTask} />
+            <PanelBody key={task.data.id} task={task.data} project={project} close={closeTask} />
           ) : (
             <ErrorState
               name="task-panel-project"
