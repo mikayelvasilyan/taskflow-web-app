@@ -394,8 +394,8 @@ Run the relevant tests after each task and commit before ticking the box.
 
 ### Phase B — API
 - [x] 5. `[Sonnet]` Auth: signup, login, logout, me, update me; JWT cookie + Bearer; bcryptjs; login rate limit; tests. — *Done: 18 auth tests (cookie + Bearer, rate limit, validation).*
-- [ ] 6. `[Sonnet]` Permissions service + `requireRole`; users endpoints (admin); protected accounts; tests incl. permission matrix.
-- [ ] 7. `[Sonnet]` Projects, members, invites (incl. invite applied on signup); tests.
+- [x] 6. `[Sonnet]` Permissions service + `requireRole`; users endpoints (admin); protected accounts; tests incl. permission matrix. — *Done: permission helpers, admin user endpoints, protected accounts.*
+- [x] 7. `[Sonnet]` Projects, members, invites (incl. invite applied on signup); tests. — *Done: projects, members, invites (applied on signup), labels. 53 API tests total.*
 - [ ] 8. `[Sonnet]` Tasks: CRUD, filters/search/sort, position, `completedAt`, activity log, labels, comments; tests.
 - [ ] 9. `[Sonnet]` Dashboard + search endpoints; tests against known data.
 - [ ] 10. `[Sonnet]` Seed: demo scenario (section 6) and `workspace` scenario; `SEED_ON_START`; periodic demo reset.

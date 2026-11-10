@@ -6,6 +6,8 @@ import type { Env } from './env.js';
 import { errorHandler, notFoundHandler } from './middleware/error.js';
 import { authRouter } from './routes/auth.js';
 import { healthRouter } from './routes/health.js';
+import { projectsRouter } from './routes/projects.js';
+import { usersRouter } from './routes/users.js';
 
 export interface AppContext {
   db: Db;
@@ -23,6 +25,8 @@ export function createApp(ctx: AppContext) {
   const api = express.Router();
   api.use(healthRouter(ctx.db));
   api.use(authRouter(ctx));
+  api.use(usersRouter(ctx));
+  api.use(projectsRouter(ctx));
   api.use(notFoundHandler);
   app.use('/api', api);
 
