@@ -9,5 +9,5 @@ services:
       NODE_ENV: test
       DATABASE_URL: file:/tmp/taskflow-test.db
     ports:
-      - "${API_PORT:-4000}:4000"
+      - '${API_PORT:-4000}:4000'
     volumes: !reset []

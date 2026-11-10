@@ -423,7 +423,7 @@ Run the relevant tests after each task and commit before ticking the box.
 
 ### Phase E — Docker, CI, deploy
 - [x] 28. `[Opus]` `api/Dockerfile`, `web/Dockerfile` + `nginx.conf`, `docker-compose.yml`, `docker-compose.test.yml`, root `Dockerfile`; verify `docker compose up` end to end. — *Done: verified `docker compose up` (health, SPA routes, cached assets, /docs, cookie login, test routes 404 in production), the test override (seed/reset work on :4000 and via nginx) and the single image (API serves web build via SERVE_WEB_DIR). Empty env values now count as unset; compose opts into a per-start random JWT secret (ALLOW_EPHEMERAL_JWT_SECRET) so no secret is committed.*
-- [ ] 29. `[Opus]` GitHub Actions `ci.yml` (lint, typecheck, tests, build, docker smoke, gitleaks) + `.gitleaks.toml`.
+- [x] 29. `[Opus]` GitHub Actions `ci.yml` (lint, typecheck, tests, build, docker smoke, gitleaks) + `.gitleaks.toml`. — *Done: jobs lint (+prettier), typecheck, test-api (coverage artifact), test-web, build, docker smoke (compose, test override, single image), gitleaks over full history. Verified locally: all Node steps pass in a clean node:22 Linux container (114 API + 23 web tests), docker smoke script passes, actionlint clean, gitleaks found no leaks (allowlist empty). Not yet run on GitHub (repo not pushed).*
 - [ ] 30. `[Opus]` `render.yaml` + `DEPLOY.md`. **Ask the owner before deploying.**
 
 ### Phase F — Polish and review

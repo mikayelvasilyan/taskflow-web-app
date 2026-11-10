@@ -22,12 +22,18 @@ const problems: string[] = [];
 function watch(page: Page, label: string) {
   page.on('console', (m) => {
     // 401 on /auth/me is expected for signed-out visitors.
-    if (m.type() === 'error' && !/401|favicon/i.test(m.text())) problems.push(`${label}: console error: ${m.text()}`);
+    if (m.type() === 'error' && !/401|favicon/i.test(m.text()))
+      problems.push(`${label}: console error: ${m.text()}`);
   });
   page.on('pageerror', (e) => problems.push(`${label}: page error: ${e.message}`));
 }
 
-async function newContext(browser: Browser, theme: string, vp: keyof typeof VIEWPORTS, signedIn: boolean) {
+async function newContext(
+  browser: Browser,
+  theme: string,
+  vp: keyof typeof VIEWPORTS,
+  signedIn: boolean,
+) {
   const ctx = await browser.newContext({
     viewport: VIEWPORTS[vp],
     deviceScaleFactor: vp === 'mobile' ? 2 : 1,
@@ -41,7 +47,8 @@ async function newContext(browser: Browser, theme: string, vp: keyof typeof VIEW
     const res = await ctx.request.post('/api/auth/login', {
       data: { email: 'demo@taskflow.dev', password: 'Demo123!' },
     });
-    if (!res.ok()) throw new Error(`Demo login failed (${res.status()}). Is the API running with demo data?`);
+    if (!res.ok())
+      throw new Error(`Demo login failed (${res.status()}). Is the API running with demo data?`);
   }
   return ctx;
 }
@@ -64,7 +71,12 @@ async function main() {
         const pub: BrowserContext = await newContext(browser, theme, vp, false);
         const p1 = await pub.newPage();
         watch(p1, `public ${theme}/${vp}`);
-        for (const [name, url] of [['landing', '/'], ['login', '/login'], ['signup', '/signup'], ['not-found', '/no-such-page']] as const) {
+        for (const [name, url] of [
+          ['landing', '/'],
+          ['login', '/login'],
+          ['signup', '/signup'],
+          ['not-found', '/no-such-page'],
+        ] as const) {
           await p1.goto(url, { waitUntil: 'networkidle' });
           await shoot(p1, name, theme, vp);
         }
@@ -90,7 +102,9 @@ async function main() {
 
         const taskId = await page.evaluate(async (href) => {
           const r = await fetch(`/api${href.replace('/app', '')}/tasks`).then((x) => x.json());
-          return r.tasks.find((t: { commentCount: number }) => t.commentCount > 0)?.id ?? r.tasks[0].id;
+          return (
+            r.tasks.find((t: { commentCount: number }) => t.commentCount > 0)?.id ?? r.tasks[0].id
+          );
         }, projectHref);
         await page.goto(`${projectHref}/board?task=${taskId}`, { waitUntil: 'networkidle' });
         await shoot(page, 'task-panel', theme, vp);

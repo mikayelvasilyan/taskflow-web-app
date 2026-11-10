@@ -1,0 +1,8 @@
+# Secret scanning config (used locally and in CI).
+# Policy (PLAN.md): only the public demo passwords may ever be allowlisted, and only if gitleaks
+# flags them. As of the first scan (15 commits) nothing was flagged, so no allowlist is needed.
+
+title = "TaskFlow gitleaks config"
+
+[extend]
+useDefault = true
