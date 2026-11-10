@@ -12,7 +12,7 @@ import { useProjectContext } from './ProjectLayout';
 export default function ProjectList() {
   const { project } = useProjectContext();
   const { filters, update, openTask, activeCount, clear } = useTaskFilters();
-  const tasks = useProjectTasks(project.id, filters);
+  const tasks = useProjectTasks(project.id, { ...filters, sort: filters.sort ?? 'status' });
   const { openNewTask } = useShell();
 
   // Clicking a header cycles asc -> desc -> default order.

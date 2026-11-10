@@ -1987,7 +1987,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": ["position", "dueDate", "priority", "createdAt", "title"]
+              "enum": ["position", "dueDate", "priority", "status", "createdAt", "title"]
             },
             "required": false,
             "name": "sort",
@@ -2262,7 +2262,7 @@
           {
             "schema": {
               "type": "string",
-              "enum": ["position", "dueDate", "priority", "createdAt", "title"]
+              "enum": ["position", "dueDate", "priority", "status", "createdAt", "title"]
             },
             "required": false,
             "name": "sort",

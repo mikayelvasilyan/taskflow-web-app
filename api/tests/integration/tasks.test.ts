@@ -239,6 +239,24 @@ describe('task filters, search and sorting', () => {
     expect((await titles('sort=createdAt&order=desc'))[0]).toBe('Echo due today');
   });
 
+  it('sorts by workflow status, then board position', async () => {
+    const { titles } = await seeded();
+    expect(await titles('sort=status')).toEqual([
+      'Alpha design',
+      'Delta',
+      'Echo due today',
+      'Bravo build',
+      'Charlie 100% done_ok',
+    ]);
+    expect(await titles('sort=status&order=desc')).toEqual([
+      'Charlie 100% done_ok',
+      'Bravo build',
+      'Alpha design',
+      'Delta',
+      'Echo due today',
+    ]);
+  });
+
   it('defaults to board position order', async () => {
     const { titles } = await seeded();
     expect((await titles('')).length).toBe(5);

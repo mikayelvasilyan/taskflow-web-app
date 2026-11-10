@@ -16,7 +16,7 @@ export interface TaskFilters {
   label?: string;
   q?: string;
   overdue?: boolean;
-  sort?: 'position' | 'dueDate' | 'priority' | 'createdAt' | 'title';
+  sort?: 'position' | 'dueDate' | 'priority' | 'status' | 'createdAt' | 'title';
   order?: 'asc' | 'desc';
 }
 

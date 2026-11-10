@@ -32,6 +32,8 @@ export interface TaskListFilters extends TaskQuery {
 
 const priorityRank = sql`case ${tasks.priority} when 'urgent' then 4 when 'high' then 3 when 'medium' then 2 else 1 end`;
 
+const statusRank = sql`case ${tasks.status} when 'todo' then 1 when 'in_progress' then 2 else 3 end`;
+
 const escapeLike = (s: string) => s.replace(/[\\%_]/g, (c) => `\\${c}`);
 
 function buildWhere(f: TaskListFilters): SQL | undefined {
@@ -66,6 +68,9 @@ function buildOrder(f: Pick<TaskQuery, 'sort' | 'order'>) {
       return [sql`${tasks.dueDate} is null`, dir(tasks.dueDate), asc(tasks.position)];
     case 'priority':
       return [dir(priorityRank), asc(tasks.position)];
+    case 'status':
+      // Workflow order (to do, in progress, done), then board position.
+      return [dir(statusRank), asc(tasks.position), asc(tasks.createdAt)];
     case 'createdAt':
       return [dir(tasks.createdAt)];
     case 'title':

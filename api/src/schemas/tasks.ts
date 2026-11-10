@@ -33,7 +33,14 @@ export const updateTaskBody = z
   })
   .refine((v) => Object.keys(v).length > 0, 'Provide at least one field to update');
 
-export const SORT_FIELDS = ['position', 'dueDate', 'priority', 'createdAt', 'title'] as const;
+export const SORT_FIELDS = [
+  'position',
+  'dueDate',
+  'priority',
+  'status',
+  'createdAt',
+  'title',
+] as const;
 
 export const taskQuery = z.object({
   status: status.optional(),

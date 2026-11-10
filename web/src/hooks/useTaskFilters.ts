@@ -5,7 +5,7 @@ import type { Priority, Status } from '@/api/client';
 
 const STATUS: Status[] = ['todo', 'in_progress', 'done'];
 const PRIORITY: Priority[] = ['low', 'medium', 'high', 'urgent'];
-const SORT = ['position', 'dueDate', 'priority', 'createdAt', 'title'] as const;
+const SORT = ['position', 'dueDate', 'priority', 'status', 'createdAt', 'title'] as const;
 
 type Patch = Partial<
   Record<
