@@ -1,4 +1,12 @@
-import { sqliteTable, text, integer, real, primaryKey, uniqueIndex, index } from 'drizzle-orm/sqlite-core';
+import {
+  sqliteTable,
+  text,
+  integer,
+  real,
+  primaryKey,
+  uniqueIndex,
+  index,
+} from 'drizzle-orm/sqlite-core';
 
 export const ROLES = ['admin', 'member'] as const;
 export const STATUSES = ['todo', 'in_progress', 'done'] as const;

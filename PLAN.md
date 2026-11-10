@@ -393,7 +393,7 @@ Run the relevant tests after each task and commit before ticking the box.
 - [x] 4. `[Sonnet]` DB: Drizzle schema (section 4), libSQL client, first migration, migrate-on-start, in-memory test helper. **If `@libsql/client` fails on Node 26/Windows, stop and report.** — *Done: libSQL works on Node 26 (no native compile); FK cascade verified.*
 
 ### Phase B — API
-- [ ] 5. `[Sonnet]` Auth: signup, login, logout, me, update me; JWT cookie + Bearer; bcryptjs; login rate limit; tests.
+- [x] 5. `[Sonnet]` Auth: signup, login, logout, me, update me; JWT cookie + Bearer; bcryptjs; login rate limit; tests. — *Done: 18 auth tests (cookie + Bearer, rate limit, validation).*
 - [ ] 6. `[Sonnet]` Permissions service + `requireRole`; users endpoints (admin); protected accounts; tests incl. permission matrix.
 - [ ] 7. `[Sonnet]` Projects, members, invites (incl. invite applied on signup); tests.
 - [ ] 8. `[Sonnet]` Tasks: CRUD, filters/search/sort, position, `completedAt`, activity log, labels, comments; tests.
