@@ -34,7 +34,7 @@ import {
   PopoverTrigger,
   Select,
 } from '@/components/ui/menu';
-import { Checkbox, Skeleton, Tabs, TabsList, TabsTrigger } from '@/components/ui/misc';
+import { Checkbox, Skeleton, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/misc';
 import { useAuth } from '@/hooks/useAuth';
 import { useTaskFilters } from '@/hooks/useTaskFilters';
 import { cn } from '@/lib/cn';
@@ -98,10 +98,10 @@ function DueDateField({
       <PopoverTrigger asChild>
         <button
           type="button"
-          aria-label="Change due date"
           className="-mx-2 inline-flex h-8 items-center gap-2 rounded-md px-2 text-base hover:bg-surface-2"
         >
           <CalendarDays className="size-4 text-fg-muted" aria-hidden />
+          <span className="sr-only">Due date: </span>
           {task.dueDate && due ? (
             <span className={cn('tabular', tone)}>
               {due.label}
@@ -165,12 +165,16 @@ function Description({
   const dirty = text !== task.description;
 
   return (
-    <section aria-labelledby="desc-heading" className="flex flex-col gap-2">
-      <div className="flex items-center justify-between">
-        <h3 id="desc-heading" className="text-sm font-semibold">
-          Description
-        </h3>
-        <Tabs value={tab} onValueChange={(v) => setTab(v as 'write' | 'preview')}>
+    <section aria-labelledby="desc-heading">
+      <Tabs
+        value={tab}
+        onValueChange={(v) => setTab(v as 'write' | 'preview')}
+        className="flex flex-col gap-2"
+      >
+        <div className="flex items-center justify-between">
+          <h3 id="desc-heading" className="text-sm font-semibold">
+            Description
+          </h3>
           <TabsList className="h-8">
             <TabsTrigger value="write" data-testid={tid.taskDescriptionTab('write')}>
               Edit
@@ -179,10 +183,8 @@ function Description({
               Preview
             </TabsTrigger>
           </TabsList>
-        </Tabs>
-      </div>
-      {tab === 'write' ? (
-        <>
+        </div>
+        <TabsContent value="write" className="flex flex-col gap-2">
           <Textarea
             ref={areaRef}
             aria-label="Description"
@@ -216,19 +218,20 @@ function Description({
               </Button>
             </div>
           )}
-        </>
-      ) : (
-        <div
-          data-testid={tid.taskDescriptionPreview}
-          className="markdown min-h-24 rounded-md border border-border bg-surface-2 p-3"
-        >
-          {text.trim() ? (
-            <ReactMarkdown rehypePlugins={[rehypeSanitize]}>{text}</ReactMarkdown>
-          ) : (
-            <p className="text-fg-subtle">Nothing to preview.</p>
-          )}
-        </div>
-      )}
+        </TabsContent>
+        <TabsContent value="preview">
+          <div
+            data-testid={tid.taskDescriptionPreview}
+            className="markdown min-h-24 rounded-md border border-border bg-surface-2 p-3"
+          >
+            {text.trim() ? (
+              <ReactMarkdown rehypePlugins={[rehypeSanitize]}>{text}</ReactMarkdown>
+            ) : (
+              <p className="text-fg-subtle">Nothing to preview.</p>
+            )}
+          </div>
+        </TabsContent>
+      </Tabs>
     </section>
   );
 }
@@ -478,7 +481,6 @@ function PanelBody({
               <PopoverTrigger asChild>
                 <button
                   type="button"
-                  aria-label="Edit labels"
                   data-testid={tid.taskLabels}
                   className={cn(
                     '-mx-2 flex min-h-8 flex-wrap items-center gap-1 rounded-md px-2 py-1 text-left hover:bg-surface-2',

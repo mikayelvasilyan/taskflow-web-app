@@ -68,6 +68,7 @@ function SortableTaskCard({
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: task.id,
+    attributes: { role: 'group' },
   });
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {

@@ -66,6 +66,7 @@ export const TaskCard = forwardRef<HTMLDivElement, TaskCardProps>(
               <Avatar person={task.assignee} size="sm" className="ring-0" />
             ) : (
               <span
+                role="img"
                 aria-label="Unassigned"
                 title="Unassigned"
                 className="inline-flex size-6 items-center justify-center rounded-full border border-dashed border-fg-subtle text-fg-subtle"

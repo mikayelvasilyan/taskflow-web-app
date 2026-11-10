@@ -70,13 +70,9 @@ export function TopBar() {
         {user && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button
-                type="button"
-                aria-label="Open user menu"
-                data-testid={tid.userMenu}
-                className="ml-1 rounded-full"
-              >
+              <button type="button" data-testid={tid.userMenu} className="ml-1 rounded-full">
                 <Avatar person={user} size="md" className="ring-0" />
+                <span className="sr-only">, open user menu</span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="min-w-56">

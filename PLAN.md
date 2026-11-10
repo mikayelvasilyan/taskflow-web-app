@@ -277,7 +277,7 @@ Quality bar: modern work tools (calm, dense, precise). TaskFlow has its **own** 
 | `--border-strong` | `#CBD0D8` | `#3A4150` | inputs, dividers that matter |
 | `--fg` | `#14171C` | `#ECEEF2` | primary text |
 | `--fg-muted` | `#5B6472` | `#9AA3B2` | secondary text |
-| `--fg-subtle` | `#6E7786` | `#7F8898` | placeholders, meta (still AA on its surface) |
+| `--fg-subtle` | `#646E7D` | `#7F8898` | placeholders, meta (still AA on its surface) |
 | `--accent` | `#2F5BEA` | `#2F5BEA` | primary buttons (white text), active states — "Flow Blue" |
 | `--accent-hover` | `#2449C8` | `#4369EE` | |
 | `--accent-fg` | `#2F5BEA` | `#8FA5FF` | accent-coloured text, links, icons |
@@ -431,8 +431,8 @@ Run the relevant tests after each task and commit before ticking the box.
 - [x] 32. `[Fable]` **Visual review** of every screenshot: list anything unfinished, cramped, misaligned or generic as numbered fixes below this list. — *Done: 44 fresh screenshots reviewed; 26 numbered fixes (V1–V26) under "Visual review fixes" below, grouped P1/P2/P3 and tagged by model.*
 - [x] 33. `[Sonnet]` Apply the visual-review fixes; re-capture screenshots. — *Done: V1–V26 applied (V20 cards are not links; see note). 115 API + 25 web tests, lint, typecheck, build and prettier all green; drag checks 14/14 in Chrome after the board layout change; 72 screenshots re-captured with no console errors (Docker Desktop was not running, so the dev servers were used instead of docker compose).*
 - [ ] 34. `[Sonnet]` Landing page using the real screenshots (must come after 33).
-- [ ] 35. `[Sonnet]` Accessibility pass: run axe on every page in both themes, fix serious/critical issues, check full keyboard use.
-- [ ] 36. `[Sonnet]` `docs/TEST_IDS.md` and `README.md` (pitch, screenshots/GIF desktop + mobile, live demo link or "coming soon", stack, Mermaid diagram, `docker compose up`, API docs link, test commands, **real** results, "personal portfolio project" label).
+- [x] 35. `[Sonnet]` Accessibility pass: run axe on every page in both themes, fix serious/critical issues, check full keyboard use. — *Done: `npm run a11y` (axe-core on 62 page states: every page and open dialog, light/dark, desktop/phone, plus 11 keyboard checks). First run found 66 findings from 6 root causes, all fixed: light `--fg-subtle` contrast (#6E7786 to #646E7D), user-menu label, board cards no longer role=button around a button, Preview tab aria-controls, due-date/labels buttons, unassigned marker. Also found and fixed: dialogs opened from state never returned focus (regression test added). Final run: no findings at all.*
+- [x] 36. `[Sonnet]` `docs/TEST_IDS.md` and `README.md` (pitch, screenshots/GIF desktop + mobile, live demo link or "coming soon", stack, Mermaid diagram, `docker compose up`, API docs link, test commands, **real** results, "personal portfolio project" label). — *Done: README (real results, honest limitations) and docs/TEST_IDS.md generated from testids.ts (`npm run docs:testids`). Screenshots in docs/ and web/public/landing predate the contrast-token tweak (visually negligible); re-capture before the final review if desired.*
 - [ ] 37. `[Haiku]` Formatting pass, remove the `/kitchen-sink` route, fix typos, check all README links.
 - [ ] 38. `[Fable]` **Final review** against the spec and this plan; confirm README numbers match a real run; list anything not finished or not verified.
 

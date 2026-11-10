@@ -1,11 +1,27 @@
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import { X } from 'lucide-react';
-import type { ComponentProps } from 'react';
+import { useRef, type ComponentProps } from 'react';
 import { cn } from '@/lib/cn';
 
 export const Dialog = DialogPrimitive.Root;
 export const DialogTrigger = DialogPrimitive.Trigger;
 export const DialogClose = DialogPrimitive.Close;
+
+/** Radix returns focus only to a DialogTrigger; ours open from state, so restore it ourselves. */
+function useRestoreFocus() {
+  const opener = useRef<HTMLElement | null>(null);
+  return {
+    onOpenAutoFocus: () => {
+      opener.current =
+        document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    },
+    onCloseAutoFocus: (event: Event) => {
+      event.preventDefault();
+      const el = opener.current;
+      if (el?.isConnected) el.focus();
+    },
+  };
+}
 
 const overlay = 'fixed inset-0 z-50 bg-[var(--overlay)] data-[state=open]:animate-fade-in';
 
@@ -15,10 +31,12 @@ export function DialogContent({
   showClose = true,
   ...props
 }: ComponentProps<typeof DialogPrimitive.Content> & { showClose?: boolean }) {
+  const restore = useRestoreFocus();
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className={overlay} />
       <DialogPrimitive.Content
+        {...restore}
         className={cn(
           // Centered dialog on larger screens, bottom sheet on phones.
           'fixed z-50 flex max-h-[90dvh] outline-none w-[calc(100%-2rem)] max-w-md flex-col gap-4 overflow-y-auto rounded-lg border border-border bg-surface p-6 shadow-lg',
@@ -74,10 +92,12 @@ export function SheetContent({
   children,
   ...props
 }: ComponentProps<typeof DialogPrimitive.Content>) {
+  const restore = useRestoreFocus();
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className={overlay} />
       <DialogPrimitive.Content
+        {...restore}
         className={cn(
           'fixed inset-y-0 right-0 z-50 flex w-full flex-col outline-none border-l border-border bg-surface shadow-lg md:w-[480px]',
           'data-[state=open]:animate-sheet-in data-[state=closed]:animate-sheet-out',

@@ -19,9 +19,12 @@
     "test": "npm run test --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
     "format": "prettier --write .",
-    "screenshots": "tsx scripts/screenshots.ts"
+    "screenshots": "tsx scripts/screenshots.ts",
+    "a11y": "tsx scripts/a11y.ts && tsx scripts/keyboard.ts",
+    "docs:testids": "tsx scripts/gen-test-ids.ts"
   },
   "devDependencies": {
+    "axe-core": "^4.14.0",
     "concurrently": "^9.1.0",
     "playwright-core": "^1.65.0",
     "prettier": "^3.4.0",
