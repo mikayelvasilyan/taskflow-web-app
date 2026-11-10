@@ -7,6 +7,7 @@ import { errorHandler, notFoundHandler } from './middleware/error.js';
 import { authRouter } from './routes/auth.js';
 import { healthRouter } from './routes/health.js';
 import { projectsRouter } from './routes/projects.js';
+import { tasksRouter } from './routes/tasks.js';
 import { usersRouter } from './routes/users.js';
 
 export interface AppContext {
@@ -27,6 +28,7 @@ export function createApp(ctx: AppContext) {
   api.use(authRouter(ctx));
   api.use(usersRouter(ctx));
   api.use(projectsRouter(ctx));
+  api.use(tasksRouter(ctx));
   api.use(notFoundHandler);
   app.use('/api', api);
 
