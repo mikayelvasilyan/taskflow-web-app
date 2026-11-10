@@ -1,0 +1,121 @@
+/**
+ * Every data-testid in the app is defined here (see PLAN.md section 8).
+ * Rule: `<area>-<element>[-<qualifier>]`, kebab-case. Never type ids inline.
+ */
+export const tid = {
+  // Global
+  toastSuccess: 'toast-success',
+  toastError: 'toast-error',
+  userMenu: 'user-menu',
+  userMenuLogout: 'user-menu-logout',
+  userMenuSettings: 'user-menu-settings',
+  themeToggle: 'theme-toggle',
+  commandPalette: 'command-palette',
+  commandPaletteInput: 'command-palette-input',
+  commandItem: (name: string) => `command-item-${name}`,
+  sidebar: 'sidebar',
+  sidebarToggle: 'sidebar-toggle',
+  bottomNav: 'bottom-nav',
+  searchTrigger: 'search-trigger',
+  confirmDialog: 'confirm-dialog',
+  confirmDialogConfirm: 'confirm-dialog-confirm',
+  confirmDialogCancel: 'confirm-dialog-cancel',
+  confirmDialogInput: 'confirm-dialog-input',
+  shortcutsDialog: 'shortcuts-dialog',
+  notFoundPage: 'not-found-page',
+  notFoundHome: 'not-found-home',
+  emptyState: (name: string) => `empty-state-${name}`,
+  skeleton: (name: string) => `skeleton-${name}`,
+  errorState: (name: string) => `error-state-${name}`,
+  retry: (name: string) => `retry-${name}`,
+
+  // Nav
+  navLink: (name: string) => `nav-link-${name}`,
+  projectLink: (id: string) => `project-link-${id}`,
+  newProjectButton: 'new-project-button',
+  newProjectForm: 'new-project-form',
+
+  // Landing
+  landingDemoButton: 'landing-demo-button',
+  landingLoginLink: 'landing-login-link',
+  landingSignupLink: 'landing-signup-link',
+
+  // Forms: {form}-{field}-input / -error, {form}-submit, {form}-error
+  field: (form: string, name: string) => `${form}-${name}-input`,
+  fieldError: (form: string, name: string) => `${form}-${name}-error`,
+  submit: (form: string) => `${form}-submit`,
+  formError: (form: string) => `${form}-error`,
+  demoLogin: (kind: 'admin' | 'member') => `login-demo-${kind}`,
+
+  // Dashboard
+  statCard: (name: string) => `stat-card-${name}`,
+  dashboardPage: 'dashboard-page',
+  myTasksPage: 'my-tasks-page',
+  overdueList: 'overdue-list',
+  myTasksList: 'my-tasks-list',
+  taskLink: (id: string) => `task-link-${id}`,
+
+  // Project / board
+  projectPage: 'project-page',
+  projectTitle: 'project-title',
+  boardView: 'board-view',
+  boardColumn: (status: string) => `board-column-${status}`,
+  boardAdd: (status: string) => `board-add-${status}`,
+  taskCard: (id: string) => `task-card-${id}`,
+  taskCardMove: (id: string) => `task-card-move-${id}`,
+  taskCardMoveTo: (id: string, status: string) => `task-card-move-${id}-${status}`,
+  tabBoard: 'tab-board',
+  tabList: 'tab-list',
+  tabSettings: 'tab-settings',
+  newTaskButton: 'new-task-button',
+  filtersToggle: 'filters-toggle',
+
+  // List view
+  listView: 'list-view',
+  taskRow: (id: string) => `task-row-${id}`,
+  filterSearch: 'filter-search-input',
+  filterStatus: 'filter-status-select',
+  filterPriority: 'filter-priority-select',
+  filterAssignee: 'filter-assignee-select',
+  filterOverdue: 'filter-overdue-checkbox',
+  filterClear: 'filter-clear',
+  sortHeader: (field: string) => `sort-${field}`,
+
+  // Task panel
+  taskPanel: 'task-panel',
+  taskPanelClose: 'task-panel-close',
+  taskTitle: 'task-title-input',
+  taskStatus: 'task-status-select',
+  taskPriority: 'task-priority-select',
+  taskAssignee: 'task-assignee-select',
+  taskDue: 'task-due-input',
+  taskLabels: 'task-labels',
+  taskLabelToggle: (id: string) => `task-label-${id}`,
+  taskDescription: 'task-description-input',
+  taskDescriptionPreview: 'task-description-preview',
+  taskDescriptionTab: (tab: 'write' | 'preview') => `task-description-tab-${tab}`,
+  taskDescriptionSave: 'task-description-save',
+  taskDelete: 'task-delete',
+  taskMenu: 'task-menu',
+  commentInput: 'comment-input',
+  commentSubmit: 'comment-submit',
+  comment: (id: string) => `comment-${id}`,
+  commentDelete: (id: string) => `comment-delete-${id}`,
+  activityItem: (id: string) => `activity-${id}`,
+  activityList: 'activity-list',
+  newTaskForm: 'new-task-form',
+
+  // Settings & members
+  settingsPage: 'settings-page',
+  settingsTab: (name: string) => `settings-tab-${name}`,
+  themeOption: (name: string) => `theme-option-${name}`,
+  memberRow: (id: string) => `member-row-${id}`,
+  memberRemove: (id: string) => `member-remove-${id}`,
+  memberRole: (id: string) => `member-role-${id}`,
+  inviteRow: (id: string) => `invite-row-${id}`,
+  inviteRevoke: (id: string) => `invite-revoke-${id}`,
+  projectDelete: 'project-delete',
+  projectSettingsPage: 'project-settings-page',
+  userRow: (id: string) => `user-row-${id}`,
+  userDelete: (id: string) => `user-delete-${id}`,
+} as const;
