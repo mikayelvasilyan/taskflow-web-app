@@ -400,8 +400,8 @@ Run the relevant tests after each task and commit before ticking the box.
 - [x] 9. `[Sonnet]` Dashboard + search endpoints; tests against known data. — *Done: dashboard + search, scoped by role, tested against known data.*
 - [x] 10. `[Sonnet]` Seed: demo scenario (section 6) and `workspace` scenario; `SEED_ON_START`; periodic demo reset. — *Done: demo seed (3 projects, 36 tasks, 4 overdue, 2 due today, 2 tomorrow, 15 completions) + isolated workspace scenario. Smoke-tested on the real server.*
 - [x] 11. `[Sonnet]` Test routes `reset` / `seed`, mounted only in `NODE_ENV=test`; test proving 404 otherwise. — *Done: reset + seed routes, 404 proven for development and production.*
-- [ ] 12. `[Sonnet]` OpenAPI from Zod, Swagger UI at `/docs`; test that the spec is valid and complete.
-- [ ] 13. `[Sonnet]` API coverage ≥ thresholds; fill gaps. Record real numbers for the README.
+- [x] 12. `[Sonnet]` OpenAPI from Zod, Swagger UI at `/docs`; test that the spec is valid and complete. — *Done: 30 routes documented, spec validated, completeness test scans route files. UI at /docs, JSON at /docs/openapi.json.*
+- [x] 13. `[Sonnet]` API coverage ≥ thresholds; fill gaps. Record real numbers for the README. — *Done (real run): 110 tests, 11 files; coverage lines 96.19%, statements 95.81%, branches 92.71%, functions 89.75%; thresholds enforced in vitest.config.ts.*
 
 ### Phase C — Web foundation
 - [ ] 14. `[Sonnet]` Web scaffold: Vite + React + TS strict, Tailwind v4, ESLint (jsx-a11y), Vitest + Testing Library + MSW, dev proxy.

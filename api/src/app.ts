@@ -6,6 +6,7 @@ import type { Env } from './env.js';
 import { errorHandler, notFoundHandler } from './middleware/error.js';
 import { authRouter } from './routes/auth.js';
 import { dashboardRouter } from './routes/dashboard.js';
+import { docsRouter } from './routes/docs.js';
 import { healthRouter } from './routes/health.js';
 import { projectsRouter } from './routes/projects.js';
 import { tasksRouter } from './routes/tasks.js';
@@ -24,6 +25,8 @@ export function createApp(ctx: AppContext) {
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(express.json({ limit: '100kb' }));
   app.use(cookieParser());
+
+  app.use('/docs', docsRouter());
 
   const api = express.Router();
   api.use(healthRouter(ctx.db));
