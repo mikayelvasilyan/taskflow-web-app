@@ -407,7 +407,7 @@ Run the relevant tests after each task and commit before ticking the box.
 - [x] 14. `[Sonnet]` Web scaffold: Vite + React + TS strict, Tailwind v4, ESLint (jsx-a11y), Vitest + Testing Library + MSW, dev proxy. — *Done.*
 - [x] 15. `[Sonnet]` Design tokens (`tokens.css`, section 7) for light/dark, Inter, Tailwind theme mapping, `useTheme` (Light/Dark/System, persisted, no flash on load). — *Done.*
 - [x] 16. `[Sonnet]` shadcn/ui primitives restyled to the tokens; `Logo`, `Wordmark`, `favicon.svg`; `Avatar`, `EmptyState` + illustrations, skeletons. — *Done.*
-- [ ] 17. `[Fable]` **Design checkpoint**: review tokens and primitives on a temporary `/kitchen-sink` route in both themes; adjust tokens before pages are built.
+- [x] 17. `[Fable]` **Design checkpoint**: review tokens and primitives on a temporary `/kitchen-sink` route in both themes; adjust tokens before pages are built. — *Superseded: never run on a `/kitchen-sink` route; the task 32 visual review covered tokens and primitives on the real pages.*
 - [x] 18. `[Sonnet]` API client, generated types (`openapi-typescript`), query hooks, `testids.ts`, auth context, protected routes, router with page transitions. — *Done: generated types via npx openapi-typescript (not a dependency; TS 5 peer conflict). Auth fix: keep the `me` query when clearing the cache on login.*
 
 ### Phase D — Web features
@@ -434,7 +434,7 @@ Run the relevant tests after each task and commit before ticking the box.
 - [x] 35. `[Sonnet]` Accessibility pass: run axe on every page in both themes, fix serious/critical issues, check full keyboard use. — *Done: `npm run a11y` (axe-core on 62 page states: every page and open dialog, light/dark, desktop/phone, plus 11 keyboard checks). First run found 66 findings from 6 root causes, all fixed: light `--fg-subtle` contrast (#6E7786 to #646E7D), user-menu label, board cards no longer role=button around a button, Preview tab aria-controls, due-date/labels buttons, unassigned marker. Also found and fixed: dialogs opened from state never returned focus (regression test added). Final run: no findings at all.*
 - [x] 36. `[Sonnet]` `docs/TEST_IDS.md` and `README.md` (pitch, screenshots/GIF desktop + mobile, live demo link or "coming soon", stack, Mermaid diagram, `docker compose up`, API docs link, test commands, **real** results, "personal portfolio project" label). — *Done: README (real results, honest limitations) and docs/TEST_IDS.md generated from testids.ts (`npm run docs:testids`). Screenshots in docs/ and web/public/landing predate the contrast-token tweak (visually negligible); re-capture before the final review if desired.*
 - [x] 37. `[Haiku]` Formatting pass, remove the `/kitchen-sink` route, fix typos, check all README links. — *Done (Haiku): Prettier clean repo-wide; no `/kitchen-sink` route exists (only plan references, so nothing removed); relative links in README, DEPLOY, PLAN and TEST_IDS all resolve (the one apparent miss was a wrong check from the repo root, `docs/TEST_IDS.md` links are correct); word review of README and DEPLOY found no misspellings, and one British spelling (colour) changed to color to match the rest; openapi.json and the screenshots are intentionally tracked.*
-- [ ] 38. `[Fable]` **Final review** against the spec and this plan; confirm README numbers match a real run; list anything not finished or not verified.
+- [x] 38. `[Fable]` **Final review** against the spec and this plan; confirm README numbers match a real run; list anything not finished or not verified. — *Done: see "Final review" below. README numbers confirmed against a real run; 6 gaps fixed; open items R1–R8 listed with owners.*
 
 ### Visual review fixes (task 32, Fable, 2026-11-10)
 
@@ -480,6 +480,37 @@ Tick each box and re-run `npm run screenshots` at the end.
 - [x] **V26 `[Sonnet]` Screenshot coverage gaps.** `scripts/screenshots.ts` never captures: the landing page below the fold (use `fullPage: true` for landing), command palette open with a query, new-task dialog, Settings → Profile and Appearance, an empty project board (empty state), the member's view of Settings (no Members tab), and the phone "Projects" sheet. Add them so the final review (task 38) and the README can use them.
 
 Not issues (checked): no horizontal page scroll on phones; both themes are complete and consistent; focus ring and contrast look right on primary controls; bottom navigation and safe areas are fine; card density and type hierarchy on the board are good.
+
+### Final review (task 38, Fable, 2026-11-11)
+
+Reviewed against `fable-portfolio-spec.md` section 1 and the ground rules, and against this plan.
+
+**Confirmed by a real run on the final commit:** 115 API tests (12 files; coverage 96.31% lines, 95.74% statements, 92.27% branches, 89.9% functions), 33 web tests (6 files), lint, typecheck (workspaces **and** `scripts/`), build and Prettier all clean. The README results table matches these numbers. All commits are authored as `Mikayel Vasilyan <mikayelvasilyan@users.noreply.github.com>` with no other email. 72 screenshots re-captured from the final build with no console errors; the landing images were refreshed from them.
+
+**Spec coverage:** every feature in spec §1 exists and was exercised in a browser or by tests: auth and roles, projects and invites, tasks, Kanban drag-and-drop (mouse, touch, keyboard), list filters/search/sort, dashboard, validation, loading/empty/error states, toasts, 404, landing page, command palette, shortcuts, settings, light/dark, responsive layout, test ids, test-only endpoints (404 outside `NODE_ENV=test`, proven by tests), health endpoint, OpenAPI at `/docs`.
+
+**Fixed in this review:**
+- `scripts/` was not typechecked by anything. Added `tsconfig.scripts.json` and made `npm run typecheck` (and so CI) cover it.
+- Two test ids were typed inline (`board-column-dots`, `my-tasks-group-*`). Moved into `testids.ts`; `docs/TEST_IDS.md` regenerated (100 ids).
+- `.env.example` did not document `ALLOW_EPHEMERAL_JWT_SECRET`.
+- Web tests this plan listed in §9 but that were never written: signup validation and server error, theme choice applied and persisted, dashboard error state with retry, skeleton then empty state. Added (6 tests).
+- Tablet and in-between widths had never been checked. Verified at 360, 768, 820, 1024 and 1280 px: no horizontal page scroll, icon-rail sidebar at 768–820, three columns visible from 768.
+- README claims about Docker, the Linux container run and gitleaks were true only for earlier commits. Reworded to say exactly when each was verified.
+
+**Not verified / open (honest list):**
+- [ ] **R1 `[Opus]` Docker and CI not re-verified on the final commit.** Docker Desktop was not running during tasks 33–38. Before pushing: `docker compose up -d --build --wait`, run the smoke checks, the test override, the single image, gitleaks and actionlint again; then push and confirm the GitHub Actions run is green. Update the README lines that currently say "when they were added".
+- [ ] **R2 `[owner]` Live demo not deployed.** Needs the owner's Render account (`DEPLOY.md`). README says "coming soon".
+- [ ] **R3 `[Opus]` Content-Security-Policy is switched off for the whole API** (`helmet({ contentSecurityPolicy: false })`, because of Swagger UI). It matters for the single-image deploy, where Express also serves the app. Enable a CSP for everything except `/docs` (the inline theme script in `index.html` needs a hash; styles need `'unsafe-inline'`), and verify in a browser on the single image.
+- [ ] **R4 `[Sonnet]` Motion is thinner than the spec asked.** Spec §1 names Framer Motion for card drag, column drop, dialogs, toasts and page transitions. Only page transitions use it; dialogs, sheets and popovers animate with CSS keyframes, drag uses dnd-kit's overlay, toasts use Sonner. Everything animates and reduced motion is respected, so this is a deviation in tool, not in behaviour. Either accept it (recommended) or move dialog/toast transitions to Motion.
+- [ ] **R5 `[Sonnet]` No UI to create or edit labels.** The API supports it and seeded projects have labels, but a brand-new project has none and the task panel then says "This project has no labels yet". Add "create label" to the labels popover or project settings.
+- [ ] **R6 `[Sonnet]` Components are hand-written on Radix primitives in the shadcn style, not installed with the shadcn CLI.** The spec says "shadcn/ui + Radix primitives". The README says "Radix primitives", which is accurate. No action unless the owner wants the literal dependency.
+- [ ] **R7 `[Haiku]` Avatar stack in the project header still overlaps the edges of the initials slightly.** Reduce the overlap to `-space-x-0.5` and re-capture.
+- [ ] **R8 `[Sonnet]` Dashboard stat cards are not links** (no cross-project filtered view exists). Low priority.
+- Task 17 (design checkpoint on a `/kitchen-sink` route) was never run as written; the full visual review in task 32 covered tokens and primitives on the real pages instead. Treated as superseded.
+- The accessibility audit and drag checks ran against the dev servers, not the Docker images (same code, different serving path).
+- No GIF in the README (the spec allows "screenshots/GIF"; screenshots are included).
+
+**Verdict:** repo 1 meets the spec for a portfolio piece, with R1 (re-verify Docker/CI and push) and R2 (deploy) as the two things to do before showing it to clients. R3 and R5 are worth doing; R4, R6, R7, R8 are optional.
 
 ### Notes / decisions log
 - *(add dated one-liners here when something deviates from the plan)*

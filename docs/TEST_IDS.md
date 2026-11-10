@@ -33,11 +33,12 @@ edit the source, not this table. The E2E repo (`playwright-jenkins-e2e`) selects
 
 ### board
 
-| Id                      | Key in `tid`      |
-| ----------------------- | ----------------- |
-| `board-view`            | `tid.boardView`   |
-| `board-column-{status}` | `tid.boardColumn` |
-| `board-add-{status}`    | `tid.boardAdd`    |
+| Id                      | Key in `tid`          |
+| ----------------------- | --------------------- |
+| `board-view`            | `tid.boardView`       |
+| `board-column-dots`     | `tid.boardColumnDots` |
+| `board-column-{status}` | `tid.boardColumn`     |
+| `board-add-{status}`    | `tid.boardAdd`        |
 
 ### bottom
 
@@ -152,10 +153,11 @@ edit the source, not this table. The E2E repo (`playwright-jenkins-e2e`) selects
 
 ### my
 
-| Id              | Key in `tid`      |
-| --------------- | ----------------- |
-| `my-tasks-page` | `tid.myTasksPage` |
-| `my-tasks-list` | `tid.myTasksList` |
+| Id                      | Key in `tid`       |
+| ----------------------- | ------------------ |
+| `my-tasks-page`         | `tid.myTasksPage`  |
+| `my-tasks-group-{name}` | `tid.myTasksGroup` |
+| `my-tasks-list`         | `tid.myTasksList`  |
 
 ### nav
 

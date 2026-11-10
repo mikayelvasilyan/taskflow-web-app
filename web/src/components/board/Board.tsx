@@ -390,7 +390,7 @@ export function Board({ tasks, onOpen, onMove, onAdd }: BoardProps) {
         </div>
         <div
           className="flex items-center justify-center gap-2 pb-3 md:hidden"
-          data-testid="board-column-dots"
+          data-testid={tid.boardColumnDots}
         >
           <span className="sr-only" aria-live="polite">
             Column {activeCol + 1} of {STATUSES.length}:{' '}

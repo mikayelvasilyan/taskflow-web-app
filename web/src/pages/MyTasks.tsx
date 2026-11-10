@@ -61,7 +61,7 @@ export default function MyTasks() {
               <section
                 key={g.key}
                 aria-labelledby={`group-${g.key}`}
-                data-testid={`my-tasks-group-${g.key}`}
+                data-testid={tid.myTasksGroup(g.key)}
               >
                 <h2
                   id={`group-${g.key}`}
