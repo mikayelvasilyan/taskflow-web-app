@@ -147,7 +147,7 @@ export default function Dashboard() {
                 value={d.counts.in_progress}
                 icon={CircleDashed}
                 tone="text-accent-fg"
-                hint={`${d.insights.dueThisWeek} due this week`}
+                hint={`${d.insights.dueThisWeek} open tasks due this week`}
               />
               <StatCard
                 name="done"

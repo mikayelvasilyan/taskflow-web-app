@@ -1,5 +1,6 @@
 import {
   CalendarClock,
+  Check,
   Command as CommandIcon,
   KanbanSquare,
   LayoutDashboard,
@@ -10,10 +11,10 @@ import {
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BrandLockup } from '@/components/brand/Logo';
-import { ProductVisual } from '@/components/common/ProductVisual';
 import { notify } from '@/components/common/toast';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
+import { cn } from '@/lib/cn';
 import { tid } from '@/lib/testids';
 
 const FEATURES: { icon: LucideIcon; title: string; text: string }[] = [
@@ -48,6 +49,78 @@ const FEATURES: { icon: LucideIcon; title: string; text: string }[] = [
     text: 'Both themes are tuned for contrast, and motion respects your system settings.',
   },
 ];
+
+/** Real product screenshot that follows the theme (light and dark variants, only one is shown). */
+function Shot({
+  name,
+  alt,
+  width,
+  height,
+  eager,
+  className,
+}: {
+  name: string;
+  alt: string;
+  width: number;
+  height: number;
+  eager?: boolean;
+  className?: string;
+}) {
+  const common = {
+    width,
+    height,
+    decoding: 'async' as const,
+    loading: eager ? ('eager' as const) : ('lazy' as const),
+  };
+  return (
+    <>
+      <img
+        src={`/landing/${name.replace('{theme}', 'light')}.png`}
+        className={cn('block dark:hidden', className)}
+        alt={alt}
+        {...common}
+      />
+      <img
+        src={`/landing/${name.replace('{theme}', 'dark')}.png`}
+        className={cn('hidden dark:block', className)}
+        alt={alt}
+        {...common}
+      />
+    </>
+  );
+}
+
+function BrowserFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-lg">
+      <div
+        aria-hidden
+        className="flex h-8 items-center gap-1.5 border-b border-border bg-surface-2 px-3"
+      >
+        <span className="size-2.5 rounded-full bg-border-strong" />
+        <span className="size-2.5 rounded-full bg-border-strong" />
+        <span className="size-2.5 rounded-full bg-border-strong" />
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function PhoneFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mx-auto w-full max-w-[280px] overflow-hidden rounded-[2rem] border-[6px] border-fg/90 bg-surface shadow-lg">
+      {children}
+    </div>
+  );
+}
+
+const FACTS = [
+  'Counts, a 14-day completion chart, overdue work and your own tasks in one calm view.',
+  'Drag cards between columns with a mouse, a finger or the keyboard.',
+  'Admins see every project; members see only the projects they belong to.',
+];
+
+const STACK = ['React', 'TypeScript', 'Express', 'SQLite', 'Playwright-tested'];
 
 export default function Landing() {
   const { user, login } = useAuth();
@@ -125,8 +198,29 @@ export default function Landing() {
                 )}
               </div>
             </div>
-            <div className="w-full max-w-4xl rounded-2xl border border-border bg-surface-2 p-2 shadow-lg md:p-3">
-              <ProductVisual />
+            <div className="w-full max-w-[1040px]">
+              <div className="max-md:hidden">
+                <BrowserFrame>
+                  <Shot
+                    name="board-{theme}-desktop"
+                    alt="TaskFlow Kanban board showing three columns of task cards"
+                    width={1440}
+                    height={900}
+                    eager
+                  />
+                </BrowserFrame>
+              </div>
+              <div className="md:hidden">
+                <PhoneFrame>
+                  <Shot
+                    name="board-{theme}-mobile"
+                    alt="TaskFlow board on a phone, one column at a time"
+                    width={780}
+                    height={1688}
+                    eager
+                  />
+                </PhoneFrame>
+              </div>
             </div>
           </div>
         </section>
@@ -152,6 +246,65 @@ export default function Landing() {
               </li>
             ))}
           </ul>
+        </section>
+
+        <section
+          aria-labelledby="status-heading"
+          className="border-y border-border bg-surface-2/60"
+        >
+          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:px-6 lg:grid-cols-[1fr_1.4fr]">
+            <div className="flex flex-col gap-5">
+              <h2 id="status-heading" className="text-4xl max-md:text-3xl">
+                See where the work stands
+              </h2>
+              <ul className="flex flex-col gap-3">
+                {FACTS.map((f) => (
+                  <li key={f} className="flex gap-3 text-base text-fg-muted">
+                    <Check className="mt-0.5 size-5 shrink-0 text-success" aria-hidden />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <BrowserFrame>
+              <Shot
+                name="dashboard-{theme}-desktop"
+                alt="TaskFlow dashboard with status counts, charts and task lists"
+                width={1440}
+                height={900}
+              />
+            </BrowserFrame>
+          </div>
+        </section>
+
+        <section aria-labelledby="built-heading" className="mx-auto max-w-6xl px-4 py-16 md:px-6">
+          <div className="flex flex-col items-center gap-5 text-center">
+            <h2 id="built-heading" className="text-3xl">
+              How it is built
+            </h2>
+            <ul className="flex flex-wrap justify-center gap-2">
+              {STACK.map((s) => (
+                <li
+                  key={s}
+                  className="rounded-full border border-border bg-surface px-3 py-1 text-sm font-medium text-fg-muted"
+                >
+                  {s}
+                </li>
+              ))}
+            </ul>
+            <p className="max-w-xl text-base text-fg-muted">
+              A personal portfolio project. The source, the test suites and the OpenAPI docs are
+              public.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button asChild>
+                <a href="https://github.com/mikayelvasilyan/taskflow-web-app">View on GitHub</a>
+              </Button>
+              <Button asChild>
+                <a href="/docs">API docs</a>
+              </Button>
+            </div>
+          </div>
         </section>
       </main>
 

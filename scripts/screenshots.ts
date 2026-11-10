@@ -55,7 +55,32 @@ async function newContext(
 
 async function shoot(page: Page, name: string, theme: string, vp: string, fullPage = false) {
   await page.waitForTimeout(700); // let charts and fonts settle
-  await page.screenshot({ path: path.join(OUT, `${name}-${theme}-${vp}.png`), fullPage });
+  if (fullPage) {
+    // Lazy-loaded images only load when scrolled into view: scroll down, wait for them, scroll back.
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 600) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 120));
+      }
+      await Promise.all(
+        [...document.images]
+          .filter((i) => i.offsetParent !== null)
+          .map((i) => i.decode().catch(() => undefined)),
+      );
+      window.scrollTo(0, 0);
+    });
+  }
+  const file = path.join(OUT, `${name}-${theme}-${vp}.png`);
+  // The repo can live in a synced folder (OneDrive) that briefly locks files: retry a few times.
+  for (let attempt = 1; ; attempt++) {
+    try {
+      await page.screenshot({ path: file, fullPage });
+      break;
+    } catch (err) {
+      if (attempt >= 4) throw err;
+      await page.waitForTimeout(500 * attempt);
+    }
+  }
   console.log(`  captured ${name}-${theme}-${vp}`);
 }
 
