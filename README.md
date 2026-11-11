@@ -133,7 +133,7 @@ Real results from my last runs on the final commit (Windows 11, Node 26, Docker 
 | Secret scan (gitleaks)        | no leaks in the full git history (31 commits); CI rescans it on every push                                                                                                                                                                                                        |
 | Docker                        | `docker compose up` healthy in under 2 minutes from a clean build; smoke test passes (health, client routes, `/docs`, cookie login, test routes 404 in production); test override seeds on `:4000` and through nginx; single image serves the app, the API and the landing assets |
 
-The GitHub Actions workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs lint and formatting, typecheck, API tests with coverage, web tests, build, a Docker smoke test and gitleaks. **It has not run on GitHub yet** because the repository has not been pushed; When the workflow was written I ran every Node step in a clean Linux (Node 22) container, the smoke script locally, and the workflow file through actionlint; those checks have not been repeated on the final commit.
+The GitHub Actions workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs lint and formatting, typecheck, API tests with coverage, web tests, build, a Docker smoke test and gitleaks. The repository was pushed on 2026-11-11, but **the first workflow run has not started yet**: it stayed queued with no jobs assigned while GitHub reported Actions as operational. Until it runs, the results in the table above come from local runs; actionlint passes on the workflow file, and the Docker smoke steps it contains pass locally.
 
 ## Accessibility
 
@@ -154,7 +154,7 @@ PLAN.md         architecture, design system and the task log this build followed
 ## Honest limitations
 
 - **Not deployed yet.** The Render blueprint and a step-by-step [DEPLOY.md](DEPLOY.md) are ready; deploying needs the owner's account. The live demo, once up, resets its data every hour.
-- **GitHub Actions has not run yet** (repository not pushed), see above.
+- **The first GitHub Actions run has not started yet** (queued since the first push), see above.
 - Invites are stored, not emailed. There is no real-time sync between users, no file uploads and no billing; those were out of scope.
 - "Today" for overdue logic is the UTC date on both client and server.
 
