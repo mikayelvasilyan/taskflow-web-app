@@ -1,5 +1,7 @@
 # TaskFlow
 
+[![CI](https://github.com/mikayelvasilyan/taskflow-web-app/actions/workflows/ci.yml/badge.svg)](https://github.com/mikayelvasilyan/taskflow-web-app/actions/workflows/ci.yml)
+
 A task and project tracker for small teams: a drag-and-drop Kanban board, a filterable list view and a dashboard, with roles, invites, dark mode and a command palette.
 
 > **This is a personal portfolio project** by Mikayel Vasilyan. It is not a real product and has no customers. It is also the system under test for my Playwright and Jenkins framework, [`playwright-jenkins-e2e`](https://github.com/mikayelvasilyan/playwright-jenkins-e2e), which is why it has stable test ids and test-only seeding endpoints.
@@ -133,7 +135,7 @@ Real results from my last runs on the final commit (Windows 11, Node 26, Docker 
 | Secret scan (gitleaks)        | no leaks in the full git history (31 commits); CI rescans it on every push                                                                                                                                                                                                        |
 | Docker                        | `docker compose up` healthy in under 2 minutes from a clean build; smoke test passes (health, client routes, `/docs`, cookie login, test routes 404 in production); test override seeds on `:4000` and through nginx; single image serves the app, the API and the landing assets |
 
-The GitHub Actions workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs lint and formatting, typecheck, API tests with coverage, web tests, build, a Docker smoke test and gitleaks. The repository was pushed on 2026-11-11, but **the first workflow run has not started yet**: it stayed queued with no jobs assigned while GitHub reported Actions as operational. Until it runs, the results in the table above come from local runs; actionlint passes on the workflow file, and the Docker smoke steps it contains pass locally.
+The GitHub Actions workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs on every push and pull request: lint and formatting, typecheck, API tests with coverage, web tests, build, a Docker smoke test (compose stack, test override and single image) and a gitleaks scan of the full history. [First green run](https://github.com/mikayelvasilyan/taskflow-web-app/actions/runs/43303541622): all 7 jobs passed, about 2 minutes end to end.
 
 ## Accessibility
 
@@ -154,7 +156,6 @@ PLAN.md         architecture, design system and the task log this build followed
 ## Honest limitations
 
 - **Not deployed yet.** The Render blueprint and a step-by-step [DEPLOY.md](DEPLOY.md) are ready; deploying needs the owner's account. The live demo, once up, resets its data every hour.
-- **The first GitHub Actions run has not started yet** (queued since the first push), see above.
 - Invites are stored, not emailed. There is no real-time sync between users, no file uploads and no billing; those were out of scope.
 - "Today" for overdue logic is the UTC date on both client and server.
 
