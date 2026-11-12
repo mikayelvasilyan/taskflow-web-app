@@ -1,0 +1,17 @@
+# Temporary diagnostic: does GitHub assign a runner to this repository at all?
+# Remove once the CI workflow runs.
+name: Runner check
+
+on:
+  push:
+    paths: ['.github/workflows/runner-check.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "A runner picked this job up."
