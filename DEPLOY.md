@@ -4,8 +4,8 @@ TaskFlow deploys as **one Docker image** (root `Dockerfile`): the API serves the
 same origin, so there are no CORS or cross-site cookie issues. The target is a **free Render web service**
 described by [`render.yaml`](render.yaml).
 
-> Status: **not deployed yet.** Deploying needs the repository owner's Render account, so it has to be done
-> by the owner. Everything below has been prepared and the image has been built and smoke-tested locally.
+> Status: **live at <https://taskflow-dd07.onrender.com>** (deployed 2026-11-13 from this blueprint; every push to `main` redeploys).
+> The steps below are how it was set up, for reference or to deploy a copy.
 
 ## What the free plan means for the demo
 
