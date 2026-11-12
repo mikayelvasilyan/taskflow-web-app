@@ -13,6 +13,7 @@ import { projectsRouter } from './routes/projects.js';
 import { tasksRouter } from './routes/tasks.js';
 import { testRouter } from './routes/test.js';
 import { usersRouter } from './routes/users.js';
+import { contentSecurityPolicy } from './security.js';
 
 export interface AppContext {
   db: Db;
@@ -23,7 +24,9 @@ export function createApp(ctx: AppContext) {
   const app = express();
   app.disable('x-powered-by');
   if (ctx.env.NODE_ENV === 'production') app.set('trust proxy', 1);
+  // Helmet sets the other security headers; our own CSP (below) skips Swagger UI at /docs.
   app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(contentSecurityPolicy);
   app.use(express.json({ limit: '100kb' }));
   app.use(cookieParser());
 

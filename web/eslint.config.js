@@ -10,6 +10,11 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   jsxA11y.flatConfigs.recommended,
   {
+    // Plain browser scripts served as-is from public/ (e.g. the theme bootstrap).
+    files: ['public/**/*.js'],
+    languageOptions: { globals: globals.browser, sourceType: 'script' },
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     languageOptions: { globals: globals.browser },
     plugins: { 'react-hooks': reactHooks },
